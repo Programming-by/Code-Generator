@@ -1,0 +1,16 @@
+C:\Users\User\Source\Repos\Code Generator\bin\Debug\Code Generator.exe.config
+C:\Users\User\Source\Repos\Code Generator\bin\Debug\Code Generator.exe
+C:\Users\User\Source\Repos\Code Generator\bin\Debug\Code Generator.pdb
+C:\Users\User\Source\Repos\Code Generator\obj\Debug\Code Generator.csproj.AssemblyReference.cache
+C:\Users\User\Source\Repos\Code Generator\obj\Debug\Code Generator.csproj.SuggestedBindingRedirects.cache
+C:\Users\User\Source\Repos\Code Generator\obj\Debug\Code_Generator.Form1.resources
+C:\Users\User\Source\Repos\Code Generator\obj\Debug\Code_Generator.Properties.Resources.resources
+C:\Users\User\Source\Repos\Code Generator\obj\Debug\Code Generator.csproj.GenerateResource.cache
+C:\Users\User\Source\Repos\Code Generator\obj\Debug\Code Generator.csproj.CoreCompileInputs.cache
+C:\Users\User\Source\Repos\Code Generator\obj\Debug\Code Generator.exe
+C:\Users\User\Source\Repos\Code Generator\obj\Debug\Code Generator.pdb
+C:\Users\User\Source\Repos\Code Generator\bin\Debug\CodeGeneratorBusinessLayer.dll
+C:\Users\User\Source\Repos\Code Generator\bin\Debug\CodeGeneratorDataAccessLayer.dll
+C:\Users\User\Source\Repos\Code Generator\bin\Debug\CodeGeneratorBusinessLayer.pdb
+C:\Users\User\Source\Repos\Code Generator\bin\Debug\CodeGeneratorDataAccessLayer.pdb
+C:\Users\User\Source\Repos\Code Generator\obj\Debug\Code Generator.csproj.CopyComplete
