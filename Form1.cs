@@ -97,9 +97,21 @@ namespace Code_Generator
            // Clippord Copy
         }
 
+
+        private void _FillDatabasesInComboBox()
+        {
+            DataTable dtDatabases = clsCodeGenerator.GetAllDatabases();
+            cbDatabases.Items.Clear();  
+            foreach (DataRow row in dtDatabases.Rows)
+            {
+                cbDatabases.Items.Add(row["name"]);
+            }
+
+
+        }
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            _FillDatabasesInComboBox();
         }
 
         private void btnCreateDatabase_Click(object sender, EventArgs e) { 
@@ -107,6 +119,7 @@ namespace Code_Generator
             if (clsCodeGenerator.CreateDatabase(txtDatabaseName.Text))
             {
                 MessageBox.Show(txtDatabaseName.Text + " Database Created Successfully");
+                _FillDatabasesInComboBox();
             }
 
 

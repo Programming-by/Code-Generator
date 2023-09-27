@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.gbTableInfo = new System.Windows.Forms.GroupBox();
-            this.cbDatabases = new System.Windows.Forms.ComboBox();
+            this.cbDatabases11 = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.btnAddTable = new System.Windows.Forms.Button();
             this.txtTabeleSingleName = new System.Windows.Forms.TextBox();
@@ -52,13 +52,18 @@
             this.label6 = new System.Windows.Forms.Label();
             this.btnCreateDatabase = new System.Windows.Forms.Button();
             this.txtDatabaseName = new System.Windows.Forms.TextBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.btnGetProperties = new System.Windows.Forms.Button();
+            this.cbDatabases = new System.Windows.Forms.ComboBox();
             this.gbTableInfo.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // gbTableInfo
             // 
-            this.gbTableInfo.Controls.Add(this.cbDatabases);
+            this.gbTableInfo.Controls.Add(this.cbDatabases11);
             this.gbTableInfo.Controls.Add(this.label3);
             this.gbTableInfo.Controls.Add(this.btnAddTable);
             this.gbTableInfo.Controls.Add(this.txtTabeleSingleName);
@@ -72,13 +77,13 @@
             this.gbTableInfo.TabStop = false;
             this.gbTableInfo.Text = "Table Info";
             // 
-            // cbDatabases
+            // cbDatabases11
             // 
-            this.cbDatabases.FormattingEnabled = true;
-            this.cbDatabases.Location = new System.Drawing.Point(148, 43);
-            this.cbDatabases.Name = "cbDatabases";
-            this.cbDatabases.Size = new System.Drawing.Size(121, 24);
-            this.cbDatabases.TabIndex = 8;
+            this.cbDatabases11.FormattingEnabled = true;
+            this.cbDatabases11.Location = new System.Drawing.Point(148, 43);
+            this.cbDatabases11.Name = "cbDatabases11";
+            this.cbDatabases11.Size = new System.Drawing.Size(121, 24);
+            this.cbDatabases11.TabIndex = 8;
             // 
             // label3
             // 
@@ -144,7 +149,7 @@
             // listViewLayers
             // 
             this.listViewLayers.HideSelection = false;
-            this.listViewLayers.Location = new System.Drawing.Point(489, 86);
+            this.listViewLayers.Location = new System.Drawing.Point(478, 512);
             this.listViewLayers.Name = "listViewLayers";
             this.listViewLayers.Size = new System.Drawing.Size(430, 471);
             this.listViewLayers.TabIndex = 8;
@@ -210,7 +215,7 @@
             // 
             // btnCopyText
             // 
-            this.btnCopyText.Location = new System.Drawing.Point(925, 486);
+            this.btnCopyText.Location = new System.Drawing.Point(925, 693);
             this.btnCopyText.Name = "btnCopyText";
             this.btnCopyText.Size = new System.Drawing.Size(75, 62);
             this.btnCopyText.TabIndex = 11;
@@ -275,11 +280,49 @@
             this.txtDatabaseName.Size = new System.Drawing.Size(221, 35);
             this.txtDatabaseName.TabIndex = 3;
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.cbDatabases);
+            this.groupBox2.Controls.Add(this.label7);
+            this.groupBox2.Controls.Add(this.btnGetProperties);
+            this.groupBox2.Location = new System.Drawing.Point(576, 86);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(391, 187);
+            this.groupBox2.TabIndex = 10;
+            this.groupBox2.TabStop = false;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(6, 38);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(117, 16);
+            this.label7.TabIndex = 7;
+            this.label7.Text = "Choose Database";
+            // 
+            // btnGetProperties
+            // 
+            this.btnGetProperties.Location = new System.Drawing.Point(184, 97);
+            this.btnGetProperties.Name = "btnGetProperties";
+            this.btnGetProperties.Size = new System.Drawing.Size(148, 62);
+            this.btnGetProperties.TabIndex = 6;
+            this.btnGetProperties.Text = "Get Properties";
+            this.btnGetProperties.UseVisualStyleBackColor = true;
+            // 
+            // cbDatabases
+            // 
+            this.cbDatabases.FormattingEnabled = true;
+            this.cbDatabases.Location = new System.Drawing.Point(150, 38);
+            this.cbDatabases.Name = "cbDatabases";
+            this.cbDatabases.Size = new System.Drawing.Size(152, 24);
+            this.cbDatabases.TabIndex = 8;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1012, 1013);
+            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.lblNumberOfRecords);
             this.Controls.Add(this.label5);
@@ -298,6 +341,8 @@
             this.gbTableInfo.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -323,12 +368,16 @@
         private System.Windows.Forms.ColumnHeader columnHeader3;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label lblNumberOfRecords;
-        private System.Windows.Forms.ComboBox cbDatabases;
+        private System.Windows.Forms.ComboBox cbDatabases11;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button btnCreateDatabase;
         private System.Windows.Forms.TextBox txtDatabaseName;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.ComboBox cbDatabases;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button btnGetProperties;
     }
 }
 
