@@ -14,94 +14,20 @@ namespace Code_Generator
 {
     public partial class Form1 : Form
     {
+        //generate business layer (class name , class properties , constructors , methods)
+        //generate dataAccess layer
+        //copy text from list view
+
+        private string NullValue;
         public Form1()
         {
             InitializeComponent();
         }
 
-        
-        private void GenerateClassProperties()
-        {
-            DataTable dt = clsCodeGenerator.GetAllPeople(txtTabeleSingleName.Text);
-
-            foreach (DataRow row in dt.Rows)
-            {
-                if (row[1].ToString() == "int")
-                {
-
-                }
-
-
-                if (row[1].ToString() == "nvarchar")
-                {
-
-                }
-
-
-            }
-
-
-        }
-
-        private void btnAddTable_Click(object sender, EventArgs e)
-        {
-
-            if(listViewColumns.Items.Count > 0)
-            {
-                //Message box then Reset
-                return;
-            }
-
-
-            DataTable dt = clsCodeGenerator.GetAllPeople(txtTabeleSingleName.Text);
-
-            foreach (DataRow row in dt.Rows)
-            {
-
-             ListViewItem item = new ListViewItem(row[0].ToString());
-             listViewColumns.Items.Add(item);
-             item.SubItems.Add(row[1].ToString());
-             item.SubItems.Add(row[2].ToString());
-
-
-                GenerateClassProperties();
-
-            }
-
-            lblNumberOfRecords.Text = clsCodeGenerator.CountColumns(txtTabeleSingleName.Text).ToString();
-
-        }
-
-        //generate business layer (class name , class properties , constructors , methods)
-        //generate dataAccess layer
-        //copy text from list view
-
-
-
-        private void btnBusinessLayer_Click(object sender, EventArgs e)
-        {
-
-
-
-     
-
-        }
-
-
-        private void btnDataAccessLayer_Click(object sender, EventArgs e)
-        {
-
-        }
-        private void btnCopyText_Click(object sender, EventArgs e)
-        {
-           // Clippord Copy
-        }
-
-
         private void _FillDatabasesInComboBox()
         {
             DataTable dtDatabases = clsCodeGenerator.GetAllDatabases();
-            cbDatabases.Items.Clear();  
+            cbDatabases.Items.Clear();
             foreach (DataRow row in dtDatabases.Rows)
             {
                 cbDatabases.Items.Add(row["name"]);
@@ -109,20 +35,121 @@ namespace Code_Generator
 
 
         }
+        private void _FillTablesInComboBox(string DatabaseName)
+        {
+           
+            DataTable dtTables = clsCodeGenerator.GetAllTables(DatabaseName);
+            cbTables.Items.Clear();
+            foreach (DataRow row in dtTables.Rows)
+            {
+                cbTables.Items.Add(row["TABLE_NAME"]);
+            }
+        }
         private void Form1_Load(object sender, EventArgs e)
         {
             _FillDatabasesInComboBox();
         }
 
-        private void btnCreateDatabase_Click(object sender, EventArgs e) { 
-        
+        private void btnCreateDatabase_Click(object sender, EventArgs e)
+        {
+
             if (clsCodeGenerator.CreateDatabase(txtDatabaseName.Text))
             {
                 MessageBox.Show(txtDatabaseName.Text + " Database Created Successfully");
                 _FillDatabasesInComboBox();
             }
+        }
+
+        private void btnAddColumns_Click(object sender, EventArgs e)
+        {
+
+            ListViewItem item = new ListViewItem(txtColumnName.Text);
+
+            listViewColumns.Items.Add(item);
+
+            item.SubItems.Add(cbDataTypes.Text);
+
+            if (chkIsNull.Checked)
+            {
+                item.SubItems.Add("Null");
+            }
+            else
+            {
+                item.SubItems.Add("Not Null");
+            }
+            IsNullOrNot();
+
+        }
+
+        private void txtDatatypeSize_TextChanged_1(object sender, EventArgs e)
+        {
+            if (txtDatatypeSize.Text.Length > 1 || txtDatatypeSize.Text.Length > 2)
+            {
+                if (cbDataTypes.SelectedIndex == 0)
+                {
+                    cbDataTypes.Text = cbDataTypes.Text.Replace("(0)", "(" + txtDatatypeSize.Text + ")");
+                }
+
+            }
+        }
+
+        private void btnCreateTable_Click(object sender, EventArgs e)
+        {
+            IsNullOrNot();
+
+            bool IsTableNotCreated = true;
+
+            if (IsTableNotCreated)
+            {
+
+                if (clsCodeGenerator.CreateTable(cbDatabases.SelectedItem.ToString(), txtTableName.Text, "ID", "int", "Not Null"))
+                {
+                    MessageBox.Show("Table Created Successfully");
+                }
+
+            }
+
+                    IsTableNotCreated = false;
+
+            if (!IsTableNotCreated)
+            {
+                foreach (ListViewItem itemRow in this.listViewColumns.Items)
+                {
+                    for (int i = 0; i < itemRow.SubItems.Count; i++)
+                    {
+                        if (clsCodeGenerator.AlterTable(txtTableName.Text, itemRow.SubItems[0].ToString(), itemRow.SubItems[1].ToString(), NullValue))
+                        {
+                            MessageBox.Show("Table Altered Successfully");
+
+                        }
+                    }
+                }
+            }
 
 
+
+        }
+
+        private void IsNullOrNot()
+        {
+            if (chkIsNull.Checked)
+            {
+                NullValue = "NULL";
+            }
+            else
+            {
+                NullValue = "Not NULL";
+            }
+        }
+
+        private void btnGetProperties_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cbDatabases_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            _FillTablesInComboBox(cbDatabases.Text);
         }
     }
 }
