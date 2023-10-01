@@ -95,37 +95,27 @@ namespace Code_Generator
 
         private void btnCreateTable_Click(object sender, EventArgs e)
         {
-            IsNullOrNot();
 
-            bool IsTableNotCreated = true;
-
-            if (IsTableNotCreated)
+            bool isTableCreated = false;
+            if (!isTableCreated)
             {
-
                 if (clsCodeGenerator.CreateTable(cbDatabases.SelectedItem.ToString(), txtTableName.Text, "ID", "int", "Not Null"))
                 {
                     MessageBox.Show("Table Created Successfully");
                 }
-
             }
+            isTableCreated = true;
 
-                    IsTableNotCreated = false;
-
-            if (!IsTableNotCreated)
+            if (isTableCreated)
             {
                 foreach (ListViewItem itemRow in this.listViewColumns.Items)
                 {
-                    for (int i = 0; i < itemRow.SubItems.Count; i++)
+                    if (clsCodeGenerator.AlterTable(txtTableName.Text, itemRow.SubItems[0].Text, itemRow.SubItems[1].Text, itemRow.SubItems[2].Text))
                     {
-                        if (clsCodeGenerator.AlterTable(txtTableName.Text, itemRow.SubItems[0].ToString(), itemRow.SubItems[1].ToString(), NullValue))
-                        {
-                            MessageBox.Show("Table Altered Successfully");
-
-                        }
+                        MessageBox.Show("Table Altered Successfully");
                     }
                 }
             }
-
 
 
         }
@@ -142,14 +132,15 @@ namespace Code_Generator
             }
         }
 
-        private void btnGetProperties_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void cbDatabases_SelectedIndexChanged(object sender, EventArgs e)
         {
             _FillTablesInComboBox(cbDatabases.Text);
+        }
+
+        private void chkIsNull_CheckedChanged(object sender, EventArgs e)
+        {
+            IsNullOrNot();
         }
     }
 }

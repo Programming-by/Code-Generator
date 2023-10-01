@@ -236,7 +236,6 @@
             this.btnGetProperties.TabIndex = 6;
             this.btnGetProperties.Text = "Get Properties";
             this.btnGetProperties.UseVisualStyleBackColor = true;
-            this.btnGetProperties.Click += new System.EventHandler(this.btnGetProperties_Click);
             // 
             // groupBox3
             // 
@@ -303,6 +302,7 @@
             this.chkIsNull.TabIndex = 13;
             this.chkIsNull.Text = "Is Null";
             this.chkIsNull.UseVisualStyleBackColor = true;
+            this.chkIsNull.CheckedChanged += new System.EventHandler(this.chkIsNull_CheckedChanged);
             // 
             // label11
             // 
