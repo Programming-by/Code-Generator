@@ -60,10 +60,15 @@
             this.label9 = new System.Windows.Forms.Label();
             this.btnAddColumns = new System.Windows.Forms.Button();
             this.txtColumnName = new System.Windows.Forms.TextBox();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.cbColumns = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
+            this.groupBox5.SuspendLayout();
             this.SuspendLayout();
             // 
             // label4
@@ -200,6 +205,7 @@
             this.cbTables.Name = "cbTables";
             this.cbTables.Size = new System.Drawing.Size(152, 24);
             this.cbTables.TabIndex = 9;
+            this.cbTables.SelectedIndexChanged += new System.EventHandler(this.cbTables_SelectedIndexChanged);
             // 
             // label12
             // 
@@ -380,11 +386,50 @@
             this.txtColumnName.Size = new System.Drawing.Size(221, 35);
             this.txtColumnName.TabIndex = 3;
             // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.cbColumns);
+            this.groupBox5.Controls.Add(this.label1);
+            this.groupBox5.Controls.Add(this.button1);
+            this.groupBox5.Location = new System.Drawing.Point(956, 321);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(391, 131);
+            this.groupBox5.TabIndex = 11;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Add Primary Key";
+            // 
+            // cbColumns
+            // 
+            this.cbColumns.FormattingEnabled = true;
+            this.cbColumns.Location = new System.Drawing.Point(130, 40);
+            this.cbColumns.Name = "cbColumns";
+            this.cbColumns.Size = new System.Drawing.Size(152, 24);
+            this.cbColumns.TabIndex = 10;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 40);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(92, 16);
+            this.label1.TabIndex = 8;
+            this.label1.Text = "Column Name";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(243, 70);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(126, 41);
+            this.button1.TabIndex = 6;
+            this.button1.Text = "Add Primary Key";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1417, 1013);
+            this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
@@ -406,6 +451,8 @@
             this.groupBox3.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -444,6 +491,10 @@
         private System.Windows.Forms.TextBox txtColumnName;
         private System.Windows.Forms.ComboBox cbTables;
         private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox cbColumns;
+        private System.Windows.Forms.Button button1;
     }
 }
 

@@ -19,6 +19,8 @@ namespace Code_Generator
         //copy text from list view
 
         private string NullValue;
+
+        private string _ID;
         public Form1()
         {
             InitializeComponent();
@@ -45,6 +47,18 @@ namespace Code_Generator
                 cbTables.Items.Add(row["TABLE_NAME"]);
             }
         }
+        
+        private void _FillColumnsInComboBox(string DatabaseName, string TableName)
+        {
+            DataTable dtColumns = clsCodeGenerator.GetAllColumns(DatabaseName, TableName);
+            cbColumns.Items.Clear();
+            foreach (DataRow row in dtColumns.Rows)
+            {
+                cbColumns.Items.Add(row["COLUMN_NAME"]);
+            }
+        }
+
+
         private void Form1_Load(object sender, EventArgs e)
         {
             _FillDatabasesInComboBox();
@@ -66,7 +80,7 @@ namespace Code_Generator
             ListViewItem item = new ListViewItem(txtColumnName.Text);
 
             listViewColumns.Items.Add(item);
-
+            
             item.SubItems.Add(cbDataTypes.Text);
 
             if (chkIsNull.Checked)
@@ -103,6 +117,8 @@ namespace Code_Generator
                 {
                     MessageBox.Show("Table Created Successfully");
                 }
+
+
             }
             isTableCreated = true;
 
@@ -114,7 +130,7 @@ namespace Code_Generator
                     {
                         MessageBox.Show("Table Altered Successfully");
                     }
-                }
+              }
             }
 
 
@@ -132,15 +148,19 @@ namespace Code_Generator
             }
         }
 
+        private void chkIsNull_CheckedChanged(object sender, EventArgs e)
+        {
+            IsNullOrNot();
+        }
 
         private void cbDatabases_SelectedIndexChanged(object sender, EventArgs e)
         {
             _FillTablesInComboBox(cbDatabases.Text);
         }
 
-        private void chkIsNull_CheckedChanged(object sender, EventArgs e)
+        private void cbTables_SelectedIndexChanged(object sender, EventArgs e)
         {
-            IsNullOrNot();
+            _FillColumnsInComboBox(cbDatabases.Text ,cbTables.Text);
         }
     }
 }
