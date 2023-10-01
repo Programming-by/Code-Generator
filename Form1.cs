@@ -91,7 +91,6 @@ namespace Code_Generator
             {
                 item.SubItems.Add("Not Null");
             }
-            IsNullOrNot();
 
         }
 
@@ -133,7 +132,7 @@ namespace Code_Generator
               }
             }
 
-
+            _FillTablesInComboBox(cbDatabases.Text);
         }
 
         private void IsNullOrNot()
@@ -161,6 +160,14 @@ namespace Code_Generator
         private void cbTables_SelectedIndexChanged(object sender, EventArgs e)
         {
             _FillColumnsInComboBox(cbDatabases.Text ,cbTables.Text);
+        }
+
+        private void btnAddPrimaryKey_Click(object sender, EventArgs e)
+        {
+            if (clsCodeGenerator.AddPrimaryKey(cbTables.Text, cbColumns.Text))
+            {
+                MessageBox.Show("Primary Key Added");
+            }
         }
     }
 }

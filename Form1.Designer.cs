@@ -63,7 +63,7 @@
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.cbColumns = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnAddPrimaryKey = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -390,7 +390,7 @@
             // 
             this.groupBox5.Controls.Add(this.cbColumns);
             this.groupBox5.Controls.Add(this.label1);
-            this.groupBox5.Controls.Add(this.button1);
+            this.groupBox5.Controls.Add(this.btnAddPrimaryKey);
             this.groupBox5.Location = new System.Drawing.Point(956, 321);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(391, 131);
@@ -415,14 +415,15 @@
             this.label1.TabIndex = 8;
             this.label1.Text = "Column Name";
             // 
-            // button1
+            // btnAddPrimaryKey
             // 
-            this.button1.Location = new System.Drawing.Point(243, 70);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(126, 41);
-            this.button1.TabIndex = 6;
-            this.button1.Text = "Add Primary Key";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnAddPrimaryKey.Location = new System.Drawing.Point(243, 70);
+            this.btnAddPrimaryKey.Name = "btnAddPrimaryKey";
+            this.btnAddPrimaryKey.Size = new System.Drawing.Size(126, 41);
+            this.btnAddPrimaryKey.TabIndex = 6;
+            this.btnAddPrimaryKey.Text = "Add Primary Key";
+            this.btnAddPrimaryKey.UseVisualStyleBackColor = true;
+            this.btnAddPrimaryKey.Click += new System.EventHandler(this.btnAddPrimaryKey_Click);
             // 
             // Form1
             // 
@@ -494,7 +495,7 @@
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cbColumns;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnAddPrimaryKey;
     }
 }
 
