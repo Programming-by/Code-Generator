@@ -293,12 +293,22 @@ namespace Code_Generator
             listViewBusinessLayer.Items.Add("return false;");
 
     }
+
+        private void btnGetAllFunction_Click(object sender, EventArgs e)
+        {
+            listViewBusinessLayer.Items.Clear();
+
+            listViewBusinessLayer.Items.Add($"public static DataTable GetAll{txtTableName.Text}s()");
+            listViewBusinessLayer.Items.Add("{");
+            listViewBusinessLayer.Items.Add($"return cls{txtTableName.Text}DataAccess.GetAll{txtTableName.Text}s();");
+            listViewBusinessLayer.Items.Add("}");
+        }
     }
     /*
 public class clsPerson
 {
      listViewBusinessLayer.Items.Add("public enum enMode { AddNew = 0, Update = 1 };");
-            listViewBusinessLayer.Items.Add("enMode Mode;");
+     listViewBusinessLayer.Items.Add("enMode Mode;");
 
 public int PersonID { get; set; }
 public string Name { get; set; }
@@ -347,11 +357,6 @@ else
     return null;
 }
 }
-
-
-
-
-
 
 }
 

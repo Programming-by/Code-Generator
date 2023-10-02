@@ -466,6 +466,7 @@
             this.btnGetAllFunction.TabIndex = 16;
             this.btnGetAllFunction.Text = "GetAll Function";
             this.btnGetAllFunction.UseVisualStyleBackColor = true;
+            this.btnGetAllFunction.Click += new System.EventHandler(this.btnGetAllFunction_Click);
             // 
             // groupBox6
             // 
