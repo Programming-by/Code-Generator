@@ -9,6 +9,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace Code_Generator
 {
@@ -20,7 +21,6 @@ namespace Code_Generator
 
         private string NullValue;
 
-        private string _ID;
         public Form1()
         {
             InitializeComponent();
@@ -47,7 +47,48 @@ namespace Code_Generator
                 cbTables.Items.Add(row["TABLE_NAME"]);
             }
         }
-        
+
+        private void _FillTable1InComboBox(string DatabaseName)
+        {
+            DataTable dtTable1 = clsCodeGenerator.GetAllTables(DatabaseName);
+            cbTable1.Items.Clear();
+            foreach (DataRow row in dtTable1.Rows)
+            {
+                cbTable1.Items.Add(row["TABLE_NAME"]);
+            }
+        }
+
+        private void _FillTable2InComboBox(string DatabaseName)
+        {
+            DataTable dtTable2 = clsCodeGenerator.GetAllTables(DatabaseName);
+            cbTable2.Items.Clear();
+            foreach (DataRow row in dtTable2.Rows)
+            {
+                cbTable2.Items.Add(row["TABLE_NAME"]);
+            }
+        }
+
+        private void _FillColumn1InComboBox(string DatabaseName, string Table1)
+        {
+            DataTable dtColumn1 = clsCodeGenerator.GetAllColumns(DatabaseName, Table1);
+            cbColumn1.Items.Clear();
+            foreach (DataRow row in dtColumn1.Rows)
+            {
+                cbColumn1.Items.Add(row["COLUMN_NAME"]);
+            }
+        }
+
+
+        private void _FillColumn2InComboBox(string DatabaseName, string Table2)
+        {
+            DataTable dtColumn2 = clsCodeGenerator.GetAllColumns(DatabaseName, Table2);
+            cbColumn2.Items.Clear();
+            foreach (DataRow row in dtColumn2.Rows)
+            {
+                cbColumn2.Items.Add(row["COLUMN_NAME"]);
+            }
+        }
+
         private void _FillColumnsInComboBox(string DatabaseName, string TableName)
         {
             DataTable dtColumns = clsCodeGenerator.GetAllColumns(DatabaseName, TableName);
@@ -155,6 +196,11 @@ namespace Code_Generator
         private void cbDatabases_SelectedIndexChanged(object sender, EventArgs e)
         {
             _FillTablesInComboBox(cbDatabases.Text);
+
+            _FillTable1InComboBox(cbDatabases.Text);
+
+            _FillTable2InComboBox(cbDatabases.Text);
+
         }
 
         private void cbTables_SelectedIndexChanged(object sender, EventArgs e)
@@ -168,6 +214,30 @@ namespace Code_Generator
             {
                 MessageBox.Show("Primary Key Added");
             }
+        }
+
+        private void btnAddFunction_Click(object sender, EventArgs e)
+        {
+           
+
+        }
+
+        private void btnAddForeignKey_Click(object sender, EventArgs e)
+        {
+            if (clsCodeGenerator.AddForeignKey(cbTable1.Text ,cbTable2.Text ,cbColumn1.Text, cbColumn2.Text))
+            {
+                MessageBox.Show("Foreign Key Added");
+            }
+        }
+
+        private void cbTable1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            _FillColumn1InComboBox(cbDatabases.Text, cbTable1.Text);
+        }
+
+        private void cbTable2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+              _FillColumn2InComboBox(cbDatabases.Text , cbTable2.Text);
         }
     }
 }

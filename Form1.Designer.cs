@@ -29,14 +29,11 @@
         private void InitializeComponent()
         {
             this.label4 = new System.Windows.Forms.Label();
-            this.listViewLayers = new System.Windows.Forms.ListView();
+            this.listViewDataAccessLayer = new System.Windows.Forms.ListView();
             this.listViewColumns = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.btnBusinessLayer = new System.Windows.Forms.Button();
-            this.btnDataAccessLayer = new System.Windows.Forms.Button();
-            this.btnCopyText = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label6 = new System.Windows.Forms.Label();
             this.btnCreateDatabase = new System.Windows.Forms.Button();
@@ -64,11 +61,32 @@
             this.cbColumns = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btnAddPrimaryKey = new System.Windows.Forms.Button();
+            this.btnAddFunction = new System.Windows.Forms.Button();
+            this.btnUpdateFunction = new System.Windows.Forms.Button();
+            this.btnFindFunction = new System.Windows.Forms.Button();
+            this.btnDeleteFunction = new System.Windows.Forms.Button();
+            this.btnGetAllFunction = new System.Windows.Forms.Button();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.listViewBusinessLayer = new System.Windows.Forms.ListView();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.cbColumn2 = new System.Windows.Forms.ComboBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.cbTable2 = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.cbTable1 = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.cbColumn1 = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.btnAddForeignKey = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox5.SuspendLayout();
+            this.groupBox6.SuspendLayout();
+            this.groupBox7.SuspendLayout();
+            this.groupBox8.SuspendLayout();
             this.SuspendLayout();
             // 
             // label4
@@ -81,14 +99,15 @@
             this.label4.TabIndex = 7;
             this.label4.Text = "Code Generator";
             // 
-            // listViewLayers
+            // listViewDataAccessLayer
             // 
-            this.listViewLayers.HideSelection = false;
-            this.listViewLayers.Location = new System.Drawing.Point(1018, 559);
-            this.listViewLayers.Name = "listViewLayers";
-            this.listViewLayers.Size = new System.Drawing.Size(430, 471);
-            this.listViewLayers.TabIndex = 8;
-            this.listViewLayers.UseCompatibleStateImageBehavior = false;
+            this.listViewDataAccessLayer.HideSelection = false;
+            this.listViewDataAccessLayer.Location = new System.Drawing.Point(6, 21);
+            this.listViewDataAccessLayer.Name = "listViewDataAccessLayer";
+            this.listViewDataAccessLayer.Size = new System.Drawing.Size(455, 471);
+            this.listViewDataAccessLayer.TabIndex = 8;
+            this.listViewDataAccessLayer.UseCompatibleStateImageBehavior = false;
+            this.listViewDataAccessLayer.View = System.Windows.Forms.View.List;
             // 
             // listViewColumns
             // 
@@ -97,9 +116,9 @@
             this.columnHeader2,
             this.columnHeader3});
             this.listViewColumns.HideSelection = false;
-            this.listViewColumns.Location = new System.Drawing.Point(489, 321);
+            this.listViewColumns.Location = new System.Drawing.Point(489, 267);
             this.listViewColumns.Name = "listViewColumns";
-            this.listViewColumns.Size = new System.Drawing.Size(410, 344);
+            this.listViewColumns.Size = new System.Drawing.Size(410, 276);
             this.listViewColumns.TabIndex = 9;
             this.listViewColumns.UseCompatibleStateImageBehavior = false;
             this.listViewColumns.View = System.Windows.Forms.View.Details;
@@ -119,39 +138,12 @@
             this.columnHeader3.Text = "AllowNull";
             this.columnHeader3.Width = 100;
             // 
-            // btnBusinessLayer
-            // 
-            this.btnBusinessLayer.Location = new System.Drawing.Point(1170, 603);
-            this.btnBusinessLayer.Name = "btnBusinessLayer";
-            this.btnBusinessLayer.Size = new System.Drawing.Size(130, 62);
-            this.btnBusinessLayer.TabIndex = 8;
-            this.btnBusinessLayer.Text = "Show Business Layer";
-            this.btnBusinessLayer.UseVisualStyleBackColor = true;
-            // 
-            // btnDataAccessLayer
-            // 
-            this.btnDataAccessLayer.Location = new System.Drawing.Point(1128, 671);
-            this.btnDataAccessLayer.Name = "btnDataAccessLayer";
-            this.btnDataAccessLayer.Size = new System.Drawing.Size(110, 62);
-            this.btnDataAccessLayer.TabIndex = 10;
-            this.btnDataAccessLayer.Text = "Show Data Access Layer";
-            this.btnDataAccessLayer.UseVisualStyleBackColor = true;
-            // 
-            // btnCopyText
-            // 
-            this.btnCopyText.Location = new System.Drawing.Point(888, 876);
-            this.btnCopyText.Name = "btnCopyText";
-            this.btnCopyText.Size = new System.Drawing.Size(75, 62);
-            this.btnCopyText.TabIndex = 11;
-            this.btnCopyText.Text = "Copy";
-            this.btnCopyText.UseVisualStyleBackColor = true;
-            // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.btnCreateDatabase);
             this.groupBox1.Controls.Add(this.txtDatabaseName);
-            this.groupBox1.Location = new System.Drawing.Point(12, 86);
+            this.groupBox1.Location = new System.Drawing.Point(12, 58);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(410, 187);
             this.groupBox1.TabIndex = 9;
@@ -192,7 +184,7 @@
             this.groupBox2.Controls.Add(this.cbDatabases);
             this.groupBox2.Controls.Add(this.label7);
             this.groupBox2.Controls.Add(this.btnGetProperties);
-            this.groupBox2.Location = new System.Drawing.Point(956, 86);
+            this.groupBox2.Location = new System.Drawing.Point(956, 58);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(391, 200);
             this.groupBox2.TabIndex = 10;
@@ -248,7 +240,7 @@
             this.groupBox3.Controls.Add(this.label8);
             this.groupBox3.Controls.Add(this.btnCreateTable);
             this.groupBox3.Controls.Add(this.txtTableName);
-            this.groupBox3.Location = new System.Drawing.Point(489, 86);
+            this.groupBox3.Location = new System.Drawing.Point(489, 58);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(410, 187);
             this.groupBox3.TabIndex = 10;
@@ -292,7 +284,7 @@
             this.groupBox4.Controls.Add(this.label9);
             this.groupBox4.Controls.Add(this.btnAddColumns);
             this.groupBox4.Controls.Add(this.txtColumnName);
-            this.groupBox4.Location = new System.Drawing.Point(21, 295);
+            this.groupBox4.Location = new System.Drawing.Point(21, 267);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(410, 237);
             this.groupBox4.TabIndex = 11;
@@ -391,7 +383,7 @@
             this.groupBox5.Controls.Add(this.cbColumns);
             this.groupBox5.Controls.Add(this.label1);
             this.groupBox5.Controls.Add(this.btnAddPrimaryKey);
-            this.groupBox5.Location = new System.Drawing.Point(956, 321);
+            this.groupBox5.Location = new System.Drawing.Point(956, 289);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(391, 131);
             this.groupBox5.TabIndex = 11;
@@ -425,21 +417,199 @@
             this.btnAddPrimaryKey.UseVisualStyleBackColor = true;
             this.btnAddPrimaryKey.Click += new System.EventHandler(this.btnAddPrimaryKey_Click);
             // 
+            // btnAddFunction
+            // 
+            this.btnAddFunction.Location = new System.Drawing.Point(47, 650);
+            this.btnAddFunction.Name = "btnAddFunction";
+            this.btnAddFunction.Size = new System.Drawing.Size(110, 62);
+            this.btnAddFunction.TabIndex = 12;
+            this.btnAddFunction.Text = "Add Function";
+            this.btnAddFunction.UseVisualStyleBackColor = true;
+            this.btnAddFunction.Click += new System.EventHandler(this.btnAddFunction_Click);
+            // 
+            // btnUpdateFunction
+            // 
+            this.btnUpdateFunction.Location = new System.Drawing.Point(47, 736);
+            this.btnUpdateFunction.Name = "btnUpdateFunction";
+            this.btnUpdateFunction.Size = new System.Drawing.Size(110, 62);
+            this.btnUpdateFunction.TabIndex = 13;
+            this.btnUpdateFunction.Text = "Update Function";
+            this.btnUpdateFunction.UseVisualStyleBackColor = true;
+            // 
+            // btnFindFunction
+            // 
+            this.btnFindFunction.Location = new System.Drawing.Point(47, 818);
+            this.btnFindFunction.Name = "btnFindFunction";
+            this.btnFindFunction.Size = new System.Drawing.Size(110, 62);
+            this.btnFindFunction.TabIndex = 14;
+            this.btnFindFunction.Text = "Find Function";
+            this.btnFindFunction.UseVisualStyleBackColor = true;
+            // 
+            // btnDeleteFunction
+            // 
+            this.btnDeleteFunction.Location = new System.Drawing.Point(47, 895);
+            this.btnDeleteFunction.Name = "btnDeleteFunction";
+            this.btnDeleteFunction.Size = new System.Drawing.Size(110, 62);
+            this.btnDeleteFunction.TabIndex = 15;
+            this.btnDeleteFunction.Text = "Delete";
+            this.btnDeleteFunction.UseVisualStyleBackColor = true;
+            // 
+            // btnGetAllFunction
+            // 
+            this.btnGetAllFunction.Location = new System.Drawing.Point(47, 571);
+            this.btnGetAllFunction.Name = "btnGetAllFunction";
+            this.btnGetAllFunction.Size = new System.Drawing.Size(110, 62);
+            this.btnGetAllFunction.TabIndex = 16;
+            this.btnGetAllFunction.Text = "GetAll Function";
+            this.btnGetAllFunction.UseVisualStyleBackColor = true;
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.listViewDataAccessLayer);
+            this.groupBox6.Location = new System.Drawing.Point(306, 573);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(454, 470);
+            this.groupBox6.TabIndex = 12;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "DataAccess";
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.listViewBusinessLayer);
+            this.groupBox7.Location = new System.Drawing.Point(858, 573);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(454, 470);
+            this.groupBox7.TabIndex = 13;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Business Layer";
+            // 
+            // listViewBusinessLayer
+            // 
+            this.listViewBusinessLayer.HideSelection = false;
+            this.listViewBusinessLayer.Location = new System.Drawing.Point(6, 21);
+            this.listViewBusinessLayer.Name = "listViewBusinessLayer";
+            this.listViewBusinessLayer.Size = new System.Drawing.Size(430, 471);
+            this.listViewBusinessLayer.TabIndex = 8;
+            this.listViewBusinessLayer.UseCompatibleStateImageBehavior = false;
+            this.listViewBusinessLayer.View = System.Windows.Forms.View.List;
+            // 
+            // groupBox8
+            // 
+            this.groupBox8.Controls.Add(this.cbColumn2);
+            this.groupBox8.Controls.Add(this.label13);
+            this.groupBox8.Controls.Add(this.cbTable2);
+            this.groupBox8.Controls.Add(this.label5);
+            this.groupBox8.Controls.Add(this.cbTable1);
+            this.groupBox8.Controls.Add(this.label3);
+            this.groupBox8.Controls.Add(this.cbColumn1);
+            this.groupBox8.Controls.Add(this.label2);
+            this.groupBox8.Controls.Add(this.btnAddForeignKey);
+            this.groupBox8.Location = new System.Drawing.Point(956, 432);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(449, 142);
+            this.groupBox8.TabIndex = 12;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "Add Foreign Key";
+            // 
+            // cbColumn2
+            // 
+            this.cbColumn2.FormattingEnabled = true;
+            this.cbColumn2.Location = new System.Drawing.Point(251, 62);
+            this.cbColumn2.Name = "cbColumn2";
+            this.cbColumn2.Size = new System.Drawing.Size(105, 24);
+            this.cbColumn2.TabIndex = 16;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(181, 70);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(62, 16);
+            this.label13.TabIndex = 15;
+            this.label13.Text = "Column 2";
+            // 
+            // cbTable2
+            // 
+            this.cbTable2.FormattingEnabled = true;
+            this.cbTable2.Location = new System.Drawing.Point(65, 62);
+            this.cbTable2.Name = "cbTable2";
+            this.cbTable2.Size = new System.Drawing.Size(99, 24);
+            this.cbTable2.TabIndex = 14;
+            this.cbTable2.SelectedIndexChanged += new System.EventHandler(this.cbTable2_SelectedIndexChanged);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(6, 70);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(53, 16);
+            this.label5.TabIndex = 13;
+            this.label5.Text = "Table 2";
+            // 
+            // cbTable1
+            // 
+            this.cbTable1.FormattingEnabled = true;
+            this.cbTable1.Location = new System.Drawing.Point(65, 21);
+            this.cbTable1.Name = "cbTable1";
+            this.cbTable1.Size = new System.Drawing.Size(99, 24);
+            this.cbTable1.TabIndex = 12;
+            this.cbTable1.SelectedIndexChanged += new System.EventHandler(this.cbTable1_SelectedIndexChanged);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(6, 24);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(53, 16);
+            this.label3.TabIndex = 11;
+            this.label3.Text = "Table 1";
+            // 
+            // cbColumn1
+            // 
+            this.cbColumn1.FormattingEnabled = true;
+            this.cbColumn1.Location = new System.Drawing.Point(251, 23);
+            this.cbColumn1.Name = "cbColumn1";
+            this.cbColumn1.Size = new System.Drawing.Size(105, 24);
+            this.cbColumn1.TabIndex = 10;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(181, 23);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(62, 16);
+            this.label2.TabIndex = 8;
+            this.label2.Text = "Column 1";
+            // 
+            // btnAddForeignKey
+            // 
+            this.btnAddForeignKey.Location = new System.Drawing.Point(293, 94);
+            this.btnAddForeignKey.Name = "btnAddForeignKey";
+            this.btnAddForeignKey.Size = new System.Drawing.Size(126, 41);
+            this.btnAddForeignKey.TabIndex = 6;
+            this.btnAddForeignKey.Text = "Add Foreign Key";
+            this.btnAddForeignKey.UseVisualStyleBackColor = true;
+            this.btnAddForeignKey.Click += new System.EventHandler(this.btnAddForeignKey_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1417, 1013);
+            this.ClientSize = new System.Drawing.Size(1417, 1055);
+            this.Controls.Add(this.groupBox8);
+            this.Controls.Add(this.groupBox7);
+            this.Controls.Add(this.groupBox6);
+            this.Controls.Add(this.btnGetAllFunction);
+            this.Controls.Add(this.btnDeleteFunction);
+            this.Controls.Add(this.btnFindFunction);
+            this.Controls.Add(this.btnUpdateFunction);
+            this.Controls.Add(this.btnAddFunction);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.btnCopyText);
-            this.Controls.Add(this.btnDataAccessLayer);
-            this.Controls.Add(this.btnBusinessLayer);
             this.Controls.Add(this.listViewColumns);
-            this.Controls.Add(this.listViewLayers);
             this.Controls.Add(this.label4);
             this.Name = "Form1";
             this.Text = "Form1";
@@ -454,6 +624,10 @@
             this.groupBox4.PerformLayout();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox8.ResumeLayout(false);
+            this.groupBox8.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -461,11 +635,8 @@
 
         #endregion
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ListView listViewLayers;
+        private System.Windows.Forms.ListView listViewDataAccessLayer;
         private System.Windows.Forms.ListView listViewColumns;
-        private System.Windows.Forms.Button btnBusinessLayer;
-        private System.Windows.Forms.Button btnDataAccessLayer;
-        private System.Windows.Forms.Button btnCopyText;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.ColumnHeader columnHeader3;
@@ -496,6 +667,24 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cbColumns;
         private System.Windows.Forms.Button btnAddPrimaryKey;
+        private System.Windows.Forms.Button btnAddFunction;
+        private System.Windows.Forms.Button btnUpdateFunction;
+        private System.Windows.Forms.Button btnFindFunction;
+        private System.Windows.Forms.Button btnDeleteFunction;
+        private System.Windows.Forms.Button btnGetAllFunction;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.ListView listViewBusinessLayer;
+        private System.Windows.Forms.GroupBox groupBox8;
+        private System.Windows.Forms.ComboBox cbColumn1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button btnAddForeignKey;
+        private System.Windows.Forms.ComboBox cbColumn2;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.ComboBox cbTable2;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ComboBox cbTable1;
+        private System.Windows.Forms.Label label3;
     }
 }
 
