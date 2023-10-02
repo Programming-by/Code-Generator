@@ -9,6 +9,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace Code_Generator
@@ -216,11 +217,6 @@ namespace Code_Generator
             }
         }
 
-        private void btnAddFunction_Click(object sender, EventArgs e)
-        {
-           
-
-        }
 
         private void btnAddForeignKey_Click(object sender, EventArgs e)
         {
@@ -239,5 +235,132 @@ namespace Code_Generator
         {
               _FillColumn2InComboBox(cbDatabases.Text , cbTable2.Text);
         }
+        private void btnAddFunction_Click(object sender, EventArgs e)
+        {
+            listViewBusinessLayer.Items.Clear();
+            // add parameters to add method
+            listViewBusinessLayer.Items.Add($"public bool _AddNew{txtTableName.Text}" + "{");
+            listViewBusinessLayer.Items.Add($"this.{txtTableName.Text}ID = cls{txtTableName.Text}DataAccess.AddNew{txtTableName.Text}()");
+            listViewBusinessLayer.Items.Add($"return (this.{txtTableName.Text}ID != -1)");
+            listViewBusinessLayer.Items.Add("}");
+
+        }
+
+        private void btnUpdateFunction_Click(object sender, EventArgs e)
+        {
+            listViewBusinessLayer.Items.Clear();
+
+            // add parameters to update method
+            listViewBusinessLayer.Items.Add($"private bool _Update{txtTableName.Text}" + "{");
+            listViewBusinessLayer.Items.Add($"return (cls{txtTableName.Text}DataAccess.Update{txtTableName.Text}(this.))");
+            listViewBusinessLayer.Items.Add("}");
+        }
+        private void btnIsExist_Click(object sender, EventArgs e)
+        {
+            listViewBusinessLayer.Items.Clear();
+
+            listViewBusinessLayer.Items.Add($"public static bool Is{txtTableName.Text}Exist" + "{");
+            listViewBusinessLayer.Items.Add($"return cls{txtTableName.Text}DataAccess.Is{txtTableName.Text}Exist(ID);");
+            listViewBusinessLayer.Items.Add("}");
+        }
+
+        private void btnDeleteFunction_Click(object sender, EventArgs e)
+        {
+            listViewBusinessLayer.Items.Clear();
+
+            listViewBusinessLayer.Items.Add("public static bool Delete" + txtTableName.Text + "{");
+            listViewBusinessLayer.Items.Add($"return cls{txtTableName.Text}DataAccess.Delete{txtTableName.Text}(ID);");
+            listViewBusinessLayer.Items.Add("}");
+        }
+
     }
+    /*
+public class clsPerson
+{
+     listViewBusinessLayer.Items.Add("public enum enMode { AddNew = 0, Update = 1 };");
+            listViewBusinessLayer.Items.Add("enMode Mode;");
+
+public int PersonID { get; set; }
+public string Name { get; set; }
+public string Phone { get; set; }
+public string Email { get; set; }
+public string PinCode { get; set; }
+
+public clsPerson() {
+
+this.PersonID = -1;
+this.Name = "";
+this.Phone = "";
+this.Email = "";
+this.PinCode = "";
+
+Mode = enMode.AddNew; 
+
+}
+
+public clsPerson(int ID , string Name , string Phone , string Email , string PinCode) { 
+
+this.PersonID = ID;
+this.Name = Name;
+this.Phone = Phone;
+this.Email = Email;
+this.PinCode = PinCode;
+
+Mode = enMode.Update;
+
+
+
+}
+
+public static clsPerson Find(int ID)
+{
+
+string Name = "", Phone = "", Email = "", PinCode = "";
+
+
+if (clsPersonDataAccess.GetPersonInfoByID(ID,ref Name, ref Phone, ref Email, ref PinCode))
+{
+    return new clsPerson(ID,Name, Phone, Email, PinCode);
+}
+else
+{
+    return null;
+}
+}
+
+
+
+
+public virtual bool Save()
+{
+switch (Mode)
+{
+
+    case enMode.AddNew:
+
+        if (_AddNewPerson())
+        {
+
+            Mode = enMode.Update;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
+    case enMode.Update:
+      return _UpdatePerson();
+
+}
+
+return false;
+}
+
+}
+
+
+
+ */
+
 }
