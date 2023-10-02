@@ -80,6 +80,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.btnAddForeignKey = new System.Windows.Forms.Button();
             this.btnIsExist = new System.Windows.Forms.Button();
+            this.btnSaveFunction = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -604,11 +605,22 @@
             this.btnIsExist.UseVisualStyleBackColor = true;
             this.btnIsExist.Click += new System.EventHandler(this.btnIsExist_Click);
             // 
+            // btnSaveFunction
+            // 
+            this.btnSaveFunction.Location = new System.Drawing.Point(21, 958);
+            this.btnSaveFunction.Name = "btnSaveFunction";
+            this.btnSaveFunction.Size = new System.Drawing.Size(136, 62);
+            this.btnSaveFunction.TabIndex = 18;
+            this.btnSaveFunction.Text = "Save";
+            this.btnSaveFunction.UseVisualStyleBackColor = true;
+            this.btnSaveFunction.Click += new System.EventHandler(this.btnSaveFunction_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1490, 1055);
+            this.Controls.Add(this.btnSaveFunction);
             this.Controls.Add(this.btnIsExist);
             this.Controls.Add(this.groupBox8);
             this.Controls.Add(this.groupBox7);
@@ -700,6 +712,7 @@
         private System.Windows.Forms.ComboBox cbTable1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnIsExist;
+        private System.Windows.Forms.Button btnSaveFunction;
     }
 }
 

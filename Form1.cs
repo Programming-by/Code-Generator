@@ -273,6 +273,26 @@ namespace Code_Generator
             listViewBusinessLayer.Items.Add("}");
         }
 
+        private void btnSaveFunction_Click(object sender, EventArgs e)
+        {
+
+            listViewBusinessLayer.Items.Clear();
+
+            listViewBusinessLayer.Items.Add("public virtual bool Save() {");
+            listViewBusinessLayer.Items.Add("switch (Mode) {");
+            listViewBusinessLayer.Items.Add("case enMode.AddNew:");
+            listViewBusinessLayer.Items.Add("if (_AddNewPerson()){");
+            listViewBusinessLayer.Items.Add("Mode = enMode.Update;");
+            listViewBusinessLayer.Items.Add("return true");
+            listViewBusinessLayer.Items.Add("} else {");
+            listViewBusinessLayer.Items.Add("return false;");
+            listViewBusinessLayer.Items.Add("}");
+            listViewBusinessLayer.Items.Add("case enMode.Update:");
+            listViewBusinessLayer.Items.Add("return _UpdatePerson();");
+            listViewBusinessLayer.Items.Add("}");
+            listViewBusinessLayer.Items.Add("return false;");
+
+    }
     }
     /*
 public class clsPerson
@@ -331,31 +351,7 @@ else
 
 
 
-public virtual bool Save()
-{
-switch (Mode)
-{
 
-    case enMode.AddNew:
-
-        if (_AddNewPerson())
-        {
-
-            Mode = enMode.Update;
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-
-    case enMode.Update:
-      return _UpdatePerson();
-
-}
-
-return false;
-}
 
 }
 
