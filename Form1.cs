@@ -28,7 +28,9 @@ namespace Code_Generator
         private string ParameterConstructorData;
         private string ParameterConstructorParameters;
         private string ArgumentOfConstructorParameters;
-
+        private string InitializeVariables;
+        private string VariableName;
+        private string VariableNameByRef;
 
 
 
@@ -177,6 +179,10 @@ namespace Code_Generator
                     DefaultConstructorValue = "\"\" ";
                     ParameterConstructorParameters += $"string {item.Text},";
                     ArgumentOfConstructorParameters += $"this.{item.Text},";
+                    InitializeVariables += $"string {item.Text} = " + DefaultConstructorValue + " ; \n";
+                    VariableNameByRef += "ref " + item.Text + ",";
+                    VariableName += item.Text + ",";
+
                     break;
 
                 case "int":
@@ -185,6 +191,10 @@ namespace Code_Generator
 
                     ParameterConstructorParameters += $"int {item.Text},";
                     ArgumentOfConstructorParameters += $"this.{item.Text},";
+                    InitializeVariables += $"int {item.Text} = " + DefaultConstructorValue + " ; \n";
+                    VariableNameByRef += "ref " + item.Text + ",";
+                    VariableName += item.Text + ",";
+
 
 
                     break;
@@ -195,7 +205,9 @@ namespace Code_Generator
                     ParameterConstructorParameters += $"decimal {item.Text},";
                     ArgumentOfConstructorParameters += $"this.{item.Text},";
 
-
+                    InitializeVariables += $"decimal {item.Text} = " + DefaultConstructorValue + " ; \n";
+                    VariableNameByRef += "ref " + item.Text + ",";
+                    VariableName += item.Text + ",";
 
                     break;
                 case "bit":
@@ -203,6 +215,10 @@ namespace Code_Generator
                     DefaultConstructorValue = "false";
                     ParameterConstructorParameters += $"bool {item.Text},";
                     ArgumentOfConstructorParameters += $"this.{item.Text},";
+
+                    InitializeVariables += $"bool {item.Text} = " + DefaultConstructorValue + " ; \n";
+                    VariableNameByRef += "ref " + item.Text + ",";
+                    VariableName += item.Text + ",";
 
 
 
@@ -213,6 +229,10 @@ namespace Code_Generator
                     DefaultConstructorValue = 0;
                     ParameterConstructorParameters += $"decimal {item.Text},";
                     ArgumentOfConstructorParameters += $"this.{item.Text},";
+
+                    InitializeVariables += $"decimal {item.Text} = " + DefaultConstructorValue + " ; \n";
+                    VariableNameByRef += "ref " + item.Text + ",";
+                    VariableName += item.Text + ",";
 
 
 
@@ -225,6 +245,10 @@ namespace Code_Generator
 
                     ParameterConstructorParameters += $"decimal {item.Text},";
                     ArgumentOfConstructorParameters += $"this.{item.Text},";
+                    InitializeVariables += $"decimal {item.Text} = " + DefaultConstructorValue + " ; \n";
+                    VariableNameByRef += "ref " + item.Text + ",";
+                    VariableName += item.Text + ",";
+
 
 
                     break;
@@ -234,6 +258,10 @@ namespace Code_Generator
                     DefaultConstructorValue = 0;
                     ParameterConstructorParameters += $"Int16 {item.Text},";
                     ArgumentOfConstructorParameters += $"this.{item.Text},";
+                    InitializeVariables += $"Int16 {item.Text} = " + DefaultConstructorValue + " ; \n";
+                    VariableNameByRef += "ref " + item.Text + ",";
+                    VariableName += item.Text + ",";
+
 
 
                     break;
@@ -243,6 +271,10 @@ namespace Code_Generator
 
                     ParameterConstructorParameters += $"float {item.Text},";
                     ArgumentOfConstructorParameters += $"this.{item.Text},";
+                    InitializeVariables += $"float {item.Text} = " + DefaultConstructorValue + " ; \n";
+                    VariableNameByRef += "ref " + item.Text + ",";
+                    VariableName += item.Text + ",";
+
 
                     break;
                 case "date":
@@ -253,6 +285,10 @@ namespace Code_Generator
                     DefaultConstructorValue = DateTime.Now;
                     ParameterConstructorParameters += $"DateTime {item.Text},";
                     ArgumentOfConstructorParameters += $"this.{item.Text},";
+                    InitializeVariables += $"DateTime {item.Text} = " + DefaultConstructorValue + " ; \n";
+                    VariableNameByRef += "ref " + item.Text + ",";
+                    VariableName += item.Text + ",";
+
 
 
                     break;
@@ -377,8 +413,8 @@ namespace Code_Generator
         }
         private void btnAddFunction_Click(object sender, EventArgs e)
         {
-            RemoveLastCommaInParameters();
-            RemoveLastCommaInArgument();
+            RemoveLastComma(ref ParameterConstructorParameters);
+            RemoveLastComma(ref ArgumentOfConstructorParameters);
 
             richTextBox1.Text = $"public bool _AddNew{txtTableName.Text}(" + ParameterConstructorParameters + ")"
 
@@ -393,9 +429,8 @@ namespace Code_Generator
         }
         private void btnUpdateFunction_Click(object sender, EventArgs e)
         {
-
-            RemoveLastCommaInParameters();
-            RemoveLastCommaInArgument();
+            RemoveLastComma (ref ParameterConstructorParameters);
+            RemoveLastComma(ref ArgumentOfConstructorParameters);
 
             richTextBox1.Text = $"private bool _Update{txtTableName.Text}(" + ParameterConstructorParameters + ")"
 
@@ -465,19 +500,22 @@ namespace Code_Generator
 
         private void btnFindFunction_Click(object sender, EventArgs e)
         {
-    
+
+            RemoveLastComma(ref VariableNameByRef);
+            RemoveLastComma(ref VariableName);
 
             richTextBox1.Text = $"public static cls{txtTableName.Text} Find(int ID)"
 
    + "{\n"
-   + $"if (cls{txtTableName.Text}DataAccess.Get{txtTableName.Text}InfoByID(ID, ref , ref ))"
+   + $"{InitializeVariables}"
+   + $"if (cls{txtTableName.Text}DataAccess.Get{txtTableName.Text}InfoByID({VariableNameByRef}))"
    + "{"
-   + $"\n return new cls{txtTableName.Text}(ID,);\n"
+   + $"\n return new cls{txtTableName.Text}({VariableName});\n"
    + "} else"
    + "{\n"
    + "return null;"
-   + "}\n"
-   + "}";
+   + "\n}"
+   + "\n}";
 
 
         }
@@ -498,8 +536,7 @@ namespace Code_Generator
 
         private void btnParameterizedConstructor_Click(object sender, EventArgs e)
         {
-
-            RemoveLastCommaInParameters();
+            RemoveLastComma(ref ParameterConstructorParameters);
 
          
             richTextBox1.Text = $"public cls{txtTableName.Text}("
@@ -513,20 +550,12 @@ namespace Code_Generator
 
         }
 
-        private void RemoveLastCommaInParameters()
+   
+        private void RemoveLastComma(ref string Text)
         {
-            if (ParameterConstructorParameters.EndsWith(","))
+            if (Text.EndsWith(","))
             {
-                ParameterConstructorParameters = ParameterConstructorParameters.Substring(0, ParameterConstructorParameters.Length - 1);
-            }
-
-        }
-
-        private void RemoveLastCommaInArgument()
-        {
-            if (ArgumentOfConstructorParameters.EndsWith(","))
-            {
-                ArgumentOfConstructorParameters = ArgumentOfConstructorParameters.Substring(0, ArgumentOfConstructorParameters.Length - 1);
+                Text = Text.Substring(0, Text.Length - 1);
             }
 
         }
