@@ -10,17 +10,26 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Header;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace Code_Generator
 {
     public partial class Form1 : Form
     {
-        //generate business layer (class name , class properties , constructors , methods)
-        //generate dataAccess layer
-        //copy text from list view
+        
 
         private string NullValue;
+
+
+        private string property;
+        private string DefaultConstructorData;
+        private dynamic DefaultConstructorValue;
+        private string ParameterConstructorData;
+        private string ParameterConstructorParameters;
+
+
+
 
         public Form1()
         {
@@ -134,6 +143,122 @@ namespace Code_Generator
                 item.SubItems.Add("Not Null");
             }
 
+
+            GenerateProperties(item,cbDataTypes.Text);
+
+            GenerateDefaultConstructor(item);
+
+            GenerateParameterizedConstructor(item);
+          
+               
+
+
+
+        }
+
+        private void GenerateDefaultConstructor(ListViewItem item)
+        {
+            DefaultConstructorData += $"this." + item.Text + "= " + DefaultConstructorValue + ";\n";
+        }
+
+        private void GenerateParameterizedConstructor(ListViewItem item)
+        {
+            ParameterConstructorData += $"this." + item.Text + "= " + item.Text + ";\n";
+        }
+
+
+        private void GenerateProperties(ListViewItem item, string DataType)
+        {
+            switch(DataType)
+            {
+                case "nvarchar(50)":
+                    property += "public string " + item.Text.ToString() + " { get; set; };\n\n";
+                    DefaultConstructorValue = "\"\" ";
+                    ParameterConstructorParameters += $"string {item.Text},";
+                    break;
+
+                case "int":
+                    property += "public int " + item.Text.ToString() + "  { get; set; };\n\n";
+                    DefaultConstructorValue = 0;
+
+                    ParameterConstructorParameters += $"int {item.Text},";
+
+                    break;
+
+                case "decimal":
+                    property += "public decimal " + item.Text.ToString() + " { get; set; };\n\n";
+                    DefaultConstructorValue = 0;
+                    ParameterConstructorParameters += $"decimal {item.Text},";
+
+
+                    break;
+                case "bit":
+                    property += "public bool " + item.Text.ToString() + " { get; set; };\n\n";
+                    DefaultConstructorValue = false;
+                    ParameterConstructorParameters += $"bool {item.Text},";
+
+
+                    break;
+                    
+                case "money":
+                    property += "public decimal " + item.Text.ToString() + " { get; set; };\n\n";
+                    DefaultConstructorValue = 0;
+                    ParameterConstructorParameters += $"decimal {item.Text},";
+
+
+                    break;
+
+                case "smallmoney":
+                    
+                    property += "public decimal " + item.Text.ToString() + " { get; set; };\n\n";
+                    DefaultConstructorValue = 0;
+
+                    ParameterConstructorParameters += $"decimal {item.Text},";
+
+                    break;
+
+                case "smallint":
+                    property += "public Int16 " + item.Text.ToString() + " { get; set; };\n\n";
+                    DefaultConstructorValue = 0;
+                    ParameterConstructorParameters += $"Int16 {item.Text},";
+
+
+                    break;
+                case "float":
+                    property += "public float " + item.Text.ToString() + " { get; set; };\n\n";
+                    DefaultConstructorValue = 0;
+
+                    ParameterConstructorParameters += $"float {item.Text},";
+
+                    break;
+                case "date":
+
+                    break;
+                case "datetime":
+                    property += "public DateTime " + item.Text.ToString() + " { get; set; };\n\n";
+                    DefaultConstructorValue = DateTime.Now;
+                    ParameterConstructorParameters += $"DateTime {item.Text},";
+
+
+                    break;
+                case "binary":
+                    property += "public Byte[] " + item.Text.ToString() + " { get; set; };\n\n";
+
+
+
+                    break;
+                case "image":
+
+                    break;
+
+
+
+
+
+
+            }
+
+
         }
 
         private void txtDatatypeSize_TextChanged_1(object sender, EventArgs e)
@@ -237,131 +362,132 @@ namespace Code_Generator
         }
         private void btnAddFunction_Click(object sender, EventArgs e)
         {
-            listViewBusinessLayer.Items.Clear();
-            // add parameters to add method
-            listViewBusinessLayer.Items.Add($"public bool _AddNew{txtTableName.Text}" + "{");
-            listViewBusinessLayer.Items.Add($"this.{txtTableName.Text}ID = cls{txtTableName.Text}DataAccess.AddNew{txtTableName.Text}()");
-            listViewBusinessLayer.Items.Add($"return (this.{txtTableName.Text}ID != -1)");
-            listViewBusinessLayer.Items.Add("}");
+            richTextBox1.Text = $"public bool _AddNew{txtTableName.Text}()"
+
+                + $"this.{txtTableName.Text}ID = cls{txtTableName.Text}DataAccess.AddNew{txtTableName.Text}()"
+
+             + $"\nreturn (this.{txtTableName.Text} != -1)"
+
+             + "\n }";
 
         }
-
         private void btnUpdateFunction_Click(object sender, EventArgs e)
         {
-            listViewBusinessLayer.Items.Clear();
+            richTextBox1.Text = $"private bool _Update{txtTableName.Text}()"
 
-            // add parameters to update method
-            listViewBusinessLayer.Items.Add($"private bool _Update{txtTableName.Text}" + "{");
-            listViewBusinessLayer.Items.Add($"return (cls{txtTableName.Text}DataAccess.Update{txtTableName.Text}(this.))");
-            listViewBusinessLayer.Items.Add("}");
+          + "{" + $"\nreturn cls{txtTableName.Text}DataAccess.Update{txtTableName.Text}(this.);"
+
+          + "\n }";
+
+
         }
         private void btnIsExist_Click(object sender, EventArgs e)
         {
-            listViewBusinessLayer.Items.Clear();
+            richTextBox1.Text = $"public static bool Is{txtTableName.Text}Exist(int ID)"
 
-            listViewBusinessLayer.Items.Add($"public static bool Is{txtTableName.Text}Exist" + "{");
-            listViewBusinessLayer.Items.Add($"return cls{txtTableName.Text}DataAccess.Is{txtTableName.Text}Exist(ID);");
-            listViewBusinessLayer.Items.Add("}");
+              + "{" + $"\nreturn cls{txtTableName.Text}DataAccess.Is{txtTableName.Text}Exist(ID);"
+
+              + "\n }";
         }
 
         private void btnDeleteFunction_Click(object sender, EventArgs e)
         {
-            listViewBusinessLayer.Items.Clear();
+            richTextBox1.Text = $"public static bool Delete{txtTableName.Text}(int ID)"
 
-            listViewBusinessLayer.Items.Add("public static bool Delete" + txtTableName.Text + "{");
-            listViewBusinessLayer.Items.Add($"return cls{txtTableName.Text}DataAccess.Delete{txtTableName.Text}(ID);");
-            listViewBusinessLayer.Items.Add("}");
+       + "{" + $"\nreturn cls{txtTableName.Text}DataAccess.Delete{txtTableName.Text}(ID);"
+
+       + "\n }";
         }
 
         private void btnSaveFunction_Click(object sender, EventArgs e)
         {
 
-            listViewBusinessLayer.Items.Clear();
 
-            listViewBusinessLayer.Items.Add("public virtual bool Save() {");
-            listViewBusinessLayer.Items.Add("switch (Mode) {");
-            listViewBusinessLayer.Items.Add("case enMode.AddNew:");
-            listViewBusinessLayer.Items.Add("if (_AddNewPerson()){");
-            listViewBusinessLayer.Items.Add("Mode = enMode.Update;");
-            listViewBusinessLayer.Items.Add("return true");
-            listViewBusinessLayer.Items.Add("} else {");
-            listViewBusinessLayer.Items.Add("return false;");
-            listViewBusinessLayer.Items.Add("}");
-            listViewBusinessLayer.Items.Add("case enMode.Update:");
-            listViewBusinessLayer.Items.Add("return _UpdatePerson();");
-            listViewBusinessLayer.Items.Add("}");
-            listViewBusinessLayer.Items.Add("return false;");
 
-    }
+            richTextBox1.Text = $"public virtual bool Save()"
+
+          + "{\n"
+
+          + "switch (Mode) { \n"
+
+          + "case enMode.AddNew:"
+          + $"\nif (_AddNew{txtTableName.Text}())"
+          + "{ \n"
+          + "Mode = enMode.Update;\n"
+          + "return true;\n"
+          + "} else {\n"
+          + "return false;\n"
+          + "}\n"
+          + "\ncase enMode.Update:"
+          + $"\nreturn _Update{txtTableName.Text}();\n"
+          +  "}\n"
+          + "return false;"
+          + "\n }";
+
+        }
+
+
 
         private void btnGetAllFunction_Click(object sender, EventArgs e)
         {
-            listViewBusinessLayer.Items.Clear();
 
-            listViewBusinessLayer.Items.Add($"public static DataTable GetAll{txtTableName.Text}s()");
-            listViewBusinessLayer.Items.Add("{");
-            listViewBusinessLayer.Items.Add($"return cls{txtTableName.Text}DataAccess.GetAll{txtTableName.Text}s();");
-            listViewBusinessLayer.Items.Add("}");
+            richTextBox1.Text = $"public static DataTable GetAll{txtTableName.Text}s()"
+
+                + "{" + $"\nreturn cls{txtTableName.Text}DataAccess.GetAll{txtTableName.Text}s();"
+                
+                + "\n }";
+
+        }
+
+        private void btnFindFunction_Click(object sender, EventArgs e)
+        {
+    
+
+            richTextBox1.Text = $"public static cls{txtTableName.Text} Find(int ID)"
+
+   + "{\n"
+   + $"if (cls{txtTableName.Text}DataAccess.Get{txtTableName.Text}InfoByID(ID, ref , ref ))"
+   + "{"
+   + $"\n return new cls{txtTableName.Text}(ID,);\n"
+   + "} else"
+   + "{\n"
+   + "return null;"
+   + "}\n"
+   + "}";
+
+
+        }
+
+        private void btnGenerateProperties_Click(object sender, EventArgs e)
+        {
+            richTextBox1.Text = property;
+        }
+
+        private void btnDefaultConstructor_Click(object sender, EventArgs e)
+        {
+                richTextBox1.Text = $"public cls{txtTableName.Text}()"
+                           + "{\n"
+                           + DefaultConstructorData
+                           + "Mode = enMode.AddNew;"
+                           +"\n}"; 
+        }
+
+        private void btnParameterizedConstructor_Click(object sender, EventArgs e)
+        {
+            if (ParameterConstructorParameters.EndsWith(","))
+            {
+                ParameterConstructorParameters = ParameterConstructorParameters.Substring(0, ParameterConstructorParameters.Length - 1);
+            }
+            richTextBox1.Text = $"public cls{txtTableName.Text}("
+                + $"{ParameterConstructorParameters}" + ")"
+                       + "{\n"
+                       + ParameterConstructorData
+                       + "Mode = enMode.Update;"
+                       + "\n}";
+
+
+
         }
     }
-    /*
-public class clsPerson
-{
-     listViewBusinessLayer.Items.Add("public enum enMode { AddNew = 0, Update = 1 };");
-     listViewBusinessLayer.Items.Add("enMode Mode;");
-
-public int PersonID { get; set; }
-public string Name { get; set; }
-public string Phone { get; set; }
-public string Email { get; set; }
-public string PinCode { get; set; }
-
-public clsPerson() {
-
-this.PersonID = -1;
-this.Name = "";
-this.Phone = "";
-this.Email = "";
-this.PinCode = "";
-
-Mode = enMode.AddNew; 
-
-}
-
-public clsPerson(int ID , string Name , string Phone , string Email , string PinCode) { 
-
-this.PersonID = ID;
-this.Name = Name;
-this.Phone = Phone;
-this.Email = Email;
-this.PinCode = PinCode;
-
-Mode = enMode.Update;
-
-
-
-}
-
-public static clsPerson Find(int ID)
-{
-
-string Name = "", Phone = "", Email = "", PinCode = "";
-
-
-if (clsPersonDataAccess.GetPersonInfoByID(ID,ref Name, ref Phone, ref Email, ref PinCode))
-{
-    return new clsPerson(ID,Name, Phone, Email, PinCode);
-}
-else
-{
-    return null;
-}
-}
-
-}
-
-
-
- */
 
 }

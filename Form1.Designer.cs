@@ -43,7 +43,6 @@
             this.label12 = new System.Windows.Forms.Label();
             this.cbDatabases = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.btnGetProperties = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label8 = new System.Windows.Forms.Label();
             this.btnCreateTable = new System.Windows.Forms.Button();
@@ -67,8 +66,9 @@
             this.btnDeleteFunction = new System.Windows.Forms.Button();
             this.btnGetAllFunction = new System.Windows.Forms.Button();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.btnDefaultConstructor = new System.Windows.Forms.Button();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
-            this.listViewBusinessLayer = new System.Windows.Forms.ListView();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.cbColumn2 = new System.Windows.Forms.ComboBox();
             this.label13 = new System.Windows.Forms.Label();
@@ -81,6 +81,8 @@
             this.btnAddForeignKey = new System.Windows.Forms.Button();
             this.btnIsExist = new System.Windows.Forms.Button();
             this.btnSaveFunction = new System.Windows.Forms.Button();
+            this.btnGenerateProperties = new System.Windows.Forms.Button();
+            this.btnParameterizedConstructor = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -185,10 +187,9 @@
             this.groupBox2.Controls.Add(this.label12);
             this.groupBox2.Controls.Add(this.cbDatabases);
             this.groupBox2.Controls.Add(this.label7);
-            this.groupBox2.Controls.Add(this.btnGetProperties);
             this.groupBox2.Location = new System.Drawing.Point(956, 58);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(391, 200);
+            this.groupBox2.Size = new System.Drawing.Size(391, 159);
             this.groupBox2.TabIndex = 10;
             this.groupBox2.TabStop = false;
             // 
@@ -227,15 +228,6 @@
             this.label7.Size = new System.Drawing.Size(117, 16);
             this.label7.TabIndex = 7;
             this.label7.Text = "Choose Database";
-            // 
-            // btnGetProperties
-            // 
-            this.btnGetProperties.Location = new System.Drawing.Point(154, 146);
-            this.btnGetProperties.Name = "btnGetProperties";
-            this.btnGetProperties.Size = new System.Drawing.Size(148, 41);
-            this.btnGetProperties.TabIndex = 6;
-            this.btnGetProperties.Text = "Get Properties";
-            this.btnGetProperties.UseVisualStyleBackColor = true;
             // 
             // groupBox3
             // 
@@ -385,7 +377,7 @@
             this.groupBox5.Controls.Add(this.cbColumns);
             this.groupBox5.Controls.Add(this.label1);
             this.groupBox5.Controls.Add(this.btnAddPrimaryKey);
-            this.groupBox5.Location = new System.Drawing.Point(956, 277);
+            this.groupBox5.Location = new System.Drawing.Point(956, 241);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(391, 131);
             this.groupBox5.TabIndex = 11;
@@ -447,6 +439,7 @@
             this.btnFindFunction.TabIndex = 14;
             this.btnFindFunction.Text = "Find Function";
             this.btnFindFunction.UseVisualStyleBackColor = true;
+            this.btnFindFunction.Click += new System.EventHandler(this.btnFindFunction_Click);
             // 
             // btnDeleteFunction
             // 
@@ -478,9 +471,19 @@
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "DataAccess";
             // 
+            // btnDefaultConstructor
+            // 
+            this.btnDefaultConstructor.Location = new System.Drawing.Point(489, 524);
+            this.btnDefaultConstructor.Name = "btnDefaultConstructor";
+            this.btnDefaultConstructor.Size = new System.Drawing.Size(142, 48);
+            this.btnDefaultConstructor.TabIndex = 20;
+            this.btnDefaultConstructor.Text = "Get Default Constructor";
+            this.btnDefaultConstructor.UseVisualStyleBackColor = true;
+            this.btnDefaultConstructor.Click += new System.EventHandler(this.btnDefaultConstructor_Click);
+            // 
             // groupBox7
             // 
-            this.groupBox7.Controls.Add(this.listViewBusinessLayer);
+            this.groupBox7.Controls.Add(this.richTextBox1);
             this.groupBox7.Location = new System.Drawing.Point(785, 573);
             this.groupBox7.Name = "groupBox7";
             this.groupBox7.Size = new System.Drawing.Size(606, 470);
@@ -488,15 +491,13 @@
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Business Layer";
             // 
-            // listViewBusinessLayer
+            // richTextBox1
             // 
-            this.listViewBusinessLayer.HideSelection = false;
-            this.listViewBusinessLayer.Location = new System.Drawing.Point(6, 21);
-            this.listViewBusinessLayer.Name = "listViewBusinessLayer";
-            this.listViewBusinessLayer.Size = new System.Drawing.Size(594, 471);
-            this.listViewBusinessLayer.TabIndex = 8;
-            this.listViewBusinessLayer.UseCompatibleStateImageBehavior = false;
-            this.listViewBusinessLayer.View = System.Windows.Forms.View.List;
+            this.richTextBox1.Location = new System.Drawing.Point(6, 37);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(600, 475);
+            this.richTextBox1.TabIndex = 9;
+            this.richTextBox1.Text = "";
             // 
             // groupBox8
             // 
@@ -509,7 +510,7 @@
             this.groupBox8.Controls.Add(this.cbColumn1);
             this.groupBox8.Controls.Add(this.label2);
             this.groupBox8.Controls.Add(this.btnAddForeignKey);
-            this.groupBox8.Location = new System.Drawing.Point(956, 432);
+            this.groupBox8.Location = new System.Drawing.Point(956, 401);
             this.groupBox8.Name = "groupBox8";
             this.groupBox8.Size = new System.Drawing.Size(449, 142);
             this.groupBox8.TabIndex = 12;
@@ -616,11 +617,34 @@
             this.btnSaveFunction.UseVisualStyleBackColor = true;
             this.btnSaveFunction.Click += new System.EventHandler(this.btnSaveFunction_Click);
             // 
+            // btnGenerateProperties
+            // 
+            this.btnGenerateProperties.Location = new System.Drawing.Point(258, 510);
+            this.btnGenerateProperties.Name = "btnGenerateProperties";
+            this.btnGenerateProperties.Size = new System.Drawing.Size(142, 62);
+            this.btnGenerateProperties.TabIndex = 19;
+            this.btnGenerateProperties.Text = "Get Properties";
+            this.btnGenerateProperties.UseVisualStyleBackColor = true;
+            this.btnGenerateProperties.Click += new System.EventHandler(this.btnGenerateProperties_Click);
+            // 
+            // btnParameterizedConstructor
+            // 
+            this.btnParameterizedConstructor.Location = new System.Drawing.Point(657, 524);
+            this.btnParameterizedConstructor.Name = "btnParameterizedConstructor";
+            this.btnParameterizedConstructor.Size = new System.Drawing.Size(142, 48);
+            this.btnParameterizedConstructor.TabIndex = 21;
+            this.btnParameterizedConstructor.Text = "Get Parameterized Constructor";
+            this.btnParameterizedConstructor.UseVisualStyleBackColor = true;
+            this.btnParameterizedConstructor.Click += new System.EventHandler(this.btnParameterizedConstructor_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1490, 1055);
+            this.Controls.Add(this.btnParameterizedConstructor);
+            this.Controls.Add(this.btnDefaultConstructor);
+            this.Controls.Add(this.btnGenerateProperties);
             this.Controls.Add(this.btnSaveFunction);
             this.Controls.Add(this.btnIsExist);
             this.Controls.Add(this.groupBox8);
@@ -674,7 +698,6 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.ComboBox cbDatabases;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Button btnGetProperties;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button btnCreateTable;
@@ -701,7 +724,6 @@
         private System.Windows.Forms.Button btnGetAllFunction;
         private System.Windows.Forms.GroupBox groupBox6;
         private System.Windows.Forms.GroupBox groupBox7;
-        private System.Windows.Forms.ListView listViewBusinessLayer;
         private System.Windows.Forms.GroupBox groupBox8;
         private System.Windows.Forms.ComboBox cbColumn1;
         private System.Windows.Forms.Label label2;
@@ -714,6 +736,10 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnIsExist;
         private System.Windows.Forms.Button btnSaveFunction;
+        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.Button btnGenerateProperties;
+        private System.Windows.Forms.Button btnDefaultConstructor;
+        private System.Windows.Forms.Button btnParameterizedConstructor;
     }
 }
 
