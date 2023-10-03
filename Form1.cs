@@ -27,6 +27,7 @@ namespace Code_Generator
         private dynamic DefaultConstructorValue;
         private string ParameterConstructorData;
         private string ParameterConstructorParameters;
+        private string ArgumentOfConstructorParameters;
 
 
 
@@ -175,6 +176,7 @@ namespace Code_Generator
                     property += "public string " + item.Text.ToString() + " { get; set; };\n\n";
                     DefaultConstructorValue = "\"\" ";
                     ParameterConstructorParameters += $"string {item.Text},";
+                    ArgumentOfConstructorParameters += $"this.{item.Text},";
                     break;
 
                 case "int":
@@ -182,6 +184,8 @@ namespace Code_Generator
                     DefaultConstructorValue = 0;
 
                     ParameterConstructorParameters += $"int {item.Text},";
+                    ArgumentOfConstructorParameters += $"this.{item.Text},";
+
 
                     break;
 
@@ -189,13 +193,17 @@ namespace Code_Generator
                     property += "public decimal " + item.Text.ToString() + " { get; set; };\n\n";
                     DefaultConstructorValue = 0;
                     ParameterConstructorParameters += $"decimal {item.Text},";
+                    ArgumentOfConstructorParameters += $"this.{item.Text},";
+
 
 
                     break;
                 case "bit":
                     property += "public bool " + item.Text.ToString() + " { get; set; };\n\n";
-                    DefaultConstructorValue = false;
+                    DefaultConstructorValue = "false";
                     ParameterConstructorParameters += $"bool {item.Text},";
+                    ArgumentOfConstructorParameters += $"this.{item.Text},";
+
 
 
                     break;
@@ -204,6 +212,8 @@ namespace Code_Generator
                     property += "public decimal " + item.Text.ToString() + " { get; set; };\n\n";
                     DefaultConstructorValue = 0;
                     ParameterConstructorParameters += $"decimal {item.Text},";
+                    ArgumentOfConstructorParameters += $"this.{item.Text},";
+
 
 
                     break;
@@ -214,6 +224,8 @@ namespace Code_Generator
                     DefaultConstructorValue = 0;
 
                     ParameterConstructorParameters += $"decimal {item.Text},";
+                    ArgumentOfConstructorParameters += $"this.{item.Text},";
+
 
                     break;
 
@@ -221,6 +233,7 @@ namespace Code_Generator
                     property += "public Int16 " + item.Text.ToString() + " { get; set; };\n\n";
                     DefaultConstructorValue = 0;
                     ParameterConstructorParameters += $"Int16 {item.Text},";
+                    ArgumentOfConstructorParameters += $"this.{item.Text},";
 
 
                     break;
@@ -229,6 +242,7 @@ namespace Code_Generator
                     DefaultConstructorValue = 0;
 
                     ParameterConstructorParameters += $"float {item.Text},";
+                    ArgumentOfConstructorParameters += $"this.{item.Text},";
 
                     break;
                 case "date":
@@ -238,6 +252,7 @@ namespace Code_Generator
                     property += "public DateTime " + item.Text.ToString() + " { get; set; };\n\n";
                     DefaultConstructorValue = DateTime.Now;
                     ParameterConstructorParameters += $"DateTime {item.Text},";
+                    ArgumentOfConstructorParameters += $"this.{item.Text},";
 
 
                     break;
@@ -362,9 +377,14 @@ namespace Code_Generator
         }
         private void btnAddFunction_Click(object sender, EventArgs e)
         {
-            richTextBox1.Text = $"public bool _AddNew{txtTableName.Text}()"
+            RemoveLastCommaInParameters();
+            RemoveLastCommaInArgument();
 
-                + $"this.{txtTableName.Text}ID = cls{txtTableName.Text}DataAccess.AddNew{txtTableName.Text}()"
+            richTextBox1.Text = $"public bool _AddNew{txtTableName.Text}(" + ParameterConstructorParameters + ")"
+
+                + $"\nthis.{txtTableName.Text}ID = cls{txtTableName.Text}DataAccess.AddNew{txtTableName.Text}("
+
+                + ArgumentOfConstructorParameters + ")"
 
              + $"\nreturn (this.{txtTableName.Text} != -1)"
 
@@ -373,9 +393,13 @@ namespace Code_Generator
         }
         private void btnUpdateFunction_Click(object sender, EventArgs e)
         {
-            richTextBox1.Text = $"private bool _Update{txtTableName.Text}()"
 
-          + "{" + $"\nreturn cls{txtTableName.Text}DataAccess.Update{txtTableName.Text}(this.);"
+            RemoveLastCommaInParameters();
+            RemoveLastCommaInArgument();
+
+            richTextBox1.Text = $"private bool _Update{txtTableName.Text}(" + ParameterConstructorParameters + ")"
+
+          + "{" + $"\nreturn cls{txtTableName.Text}DataAccess.Update{txtTableName.Text}({ArgumentOfConstructorParameters})"
 
           + "\n }";
 
@@ -474,10 +498,10 @@ namespace Code_Generator
 
         private void btnParameterizedConstructor_Click(object sender, EventArgs e)
         {
-            if (ParameterConstructorParameters.EndsWith(","))
-            {
-                ParameterConstructorParameters = ParameterConstructorParameters.Substring(0, ParameterConstructorParameters.Length - 1);
-            }
+
+            RemoveLastCommaInParameters();
+
+         
             richTextBox1.Text = $"public cls{txtTableName.Text}("
                 + $"{ParameterConstructorParameters}" + ")"
                        + "{\n"
@@ -488,6 +512,25 @@ namespace Code_Generator
 
 
         }
+
+        private void RemoveLastCommaInParameters()
+        {
+            if (ParameterConstructorParameters.EndsWith(","))
+            {
+                ParameterConstructorParameters = ParameterConstructorParameters.Substring(0, ParameterConstructorParameters.Length - 1);
+            }
+
+        }
+
+        private void RemoveLastCommaInArgument()
+        {
+            if (ArgumentOfConstructorParameters.EndsWith(","))
+            {
+                ArgumentOfConstructorParameters = ArgumentOfConstructorParameters.Substring(0, ArgumentOfConstructorParameters.Length - 1);
+            }
+
+        }
+
     }
 
 }
