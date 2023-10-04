@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.label4 = new System.Windows.Forms.Label();
-            this.listViewDataAccessLayer = new System.Windows.Forms.ListView();
             this.listViewColumns = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -83,6 +82,8 @@
             this.btnSaveFunction = new System.Windows.Forms.Button();
             this.btnGenerateProperties = new System.Windows.Forms.Button();
             this.btnParameterizedConstructor = new System.Windows.Forms.Button();
+            this.btnGenerateDataAccess = new System.Windows.Forms.Button();
+            this.richTextBox2 = new System.Windows.Forms.RichTextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -102,16 +103,6 @@
             this.label4.Size = new System.Drawing.Size(231, 32);
             this.label4.TabIndex = 7;
             this.label4.Text = "Code Generator";
-            // 
-            // listViewDataAccessLayer
-            // 
-            this.listViewDataAccessLayer.HideSelection = false;
-            this.listViewDataAccessLayer.Location = new System.Drawing.Point(6, 21);
-            this.listViewDataAccessLayer.Name = "listViewDataAccessLayer";
-            this.listViewDataAccessLayer.Size = new System.Drawing.Size(531, 471);
-            this.listViewDataAccessLayer.TabIndex = 8;
-            this.listViewDataAccessLayer.UseCompatibleStateImageBehavior = false;
-            this.listViewDataAccessLayer.View = System.Windows.Forms.View.List;
             // 
             // listViewColumns
             // 
@@ -463,7 +454,7 @@
             // 
             // groupBox6
             // 
-            this.groupBox6.Controls.Add(this.listViewDataAccessLayer);
+            this.groupBox6.Controls.Add(this.richTextBox2);
             this.groupBox6.Location = new System.Drawing.Point(212, 573);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(537, 470);
@@ -637,11 +628,30 @@
             this.btnParameterizedConstructor.UseVisualStyleBackColor = true;
             this.btnParameterizedConstructor.Click += new System.EventHandler(this.btnParameterizedConstructor_Click);
             // 
+            // btnGenerateDataAccess
+            // 
+            this.btnGenerateDataAccess.Location = new System.Drawing.Point(965, 542);
+            this.btnGenerateDataAccess.Name = "btnGenerateDataAccess";
+            this.btnGenerateDataAccess.Size = new System.Drawing.Size(142, 62);
+            this.btnGenerateDataAccess.TabIndex = 22;
+            this.btnGenerateDataAccess.Text = "Generate Data Access";
+            this.btnGenerateDataAccess.UseVisualStyleBackColor = true;
+            this.btnGenerateDataAccess.Click += new System.EventHandler(this.btnGenerateDataAccess_Click);
+            // 
+            // richTextBox2
+            // 
+            this.richTextBox2.Location = new System.Drawing.Point(0, 21);
+            this.richTextBox2.Name = "richTextBox2";
+            this.richTextBox2.Size = new System.Drawing.Size(537, 475);
+            this.richTextBox2.TabIndex = 10;
+            this.richTextBox2.Text = "";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1490, 1055);
+            this.Controls.Add(this.btnGenerateDataAccess);
             this.Controls.Add(this.btnParameterizedConstructor);
             this.Controls.Add(this.btnDefaultConstructor);
             this.Controls.Add(this.btnGenerateProperties);
@@ -686,7 +696,6 @@
 
         #endregion
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ListView listViewDataAccessLayer;
         private System.Windows.Forms.ListView listViewColumns;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
@@ -740,6 +749,8 @@
         private System.Windows.Forms.Button btnGenerateProperties;
         private System.Windows.Forms.Button btnDefaultConstructor;
         private System.Windows.Forms.Button btnParameterizedConstructor;
+        private System.Windows.Forms.Button btnGenerateDataAccess;
+        private System.Windows.Forms.RichTextBox richTextBox2;
     }
 }
 
