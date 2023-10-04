@@ -6,6 +6,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,7 +23,6 @@ namespace Code_Generator
 
         private string NullValue;
 
-        bool isTableCreated = false;
 
 
         struct FunctionData
@@ -42,10 +42,7 @@ namespace Code_Generator
 
         FunctionData Data;
 
-
-        // remove int ID = 0 , ref ID in Find business layer
-        // handle exception when table is exist
-        // generate data access for find , add , update
+        // generate data access for find ,  ,command parameters in add,command parameters in update and set
 
         public Form1()
         {
@@ -367,11 +364,11 @@ namespace Code_Generator
 
                 if (clsCodeGenerator.CreateTable(cbDatabases.SelectedItem.ToString(), txtTableName.Text, "ID", "int", "Not Null"))
                 {
-                    MessageBox.Show("Table Created Successfully");
-                }
+                   MessageBox.Show("Table Created Successfully", "Created",MessageBoxButtons.OK);
+
+                   }
 
 
-            isTableCreated = true;
 
                 foreach (ListViewItem itemRow in this.listViewColumns.Items)
                 {
@@ -530,20 +527,30 @@ namespace Code_Generator
 
         }
 
-        private void btnFindFunction_Click(object sender, EventArgs e)
+        private void ReplaceText(ref string Text)
+        {
+            Text = Text.Replace("ref ID,", "ID,");
+
+        }
+
+
+
+    private void btnFindFunction_Click(object sender, EventArgs e)
         {
 
-            RemoveLastComma(ref Data.VariableNameByRef);
-            RemoveLastComma(ref Data.VariableNameWithComma);
+            ReplaceText(ref Data.VariableNameByRef);
 
-      
+            Data.InitializeVariables = Data.InitializeVariables.Replace("int ID = 0 ;", "");
+
+
+
             richTextBox1.Text = $"public static cls{txtTableName.Text} Find(int ID)"
 
    + "{\n"
    + $"{Data.InitializeVariables}"
-   + $"if (cls{txtTableName.Text}DataAccess.Get{txtTableName.Text}InfoByID({Data.VariableNameByRef}))"
+   + $"if (cls{txtTableName.Text}DataAccess.Get{txtTableName.Text}InfoByID({RemoveLastComma(ref Data.VariableNameByRef)}))"
    + "{"
-   + $"\n return new cls{txtTableName.Text}({Data.VariableNameWithComma});\n"
+   + $"\n return new cls{txtTableName.Text}({RemoveLastComma(ref Data.VariableNameWithComma)});\n"
    + "} else"
    + "{\n"
    + "return null;"
@@ -627,6 +634,40 @@ namespace Code_Generator
 
         }
         
+        private void GenerateFindDataAccess()
+        {
+
+            richTextBox2.Text = $"public static bool Generate{txtTableName.Text}InfoByID(" +
+                 $"{RemoveLastComma(ref Data.VariableNameByRefWithDataType)}" + ")"
+                 + "{\n"
+                 + "bool isFound = false;\n" +
+                 "SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);\n"
+                 + $"string query = \"Select * from {txtTableName.Text}s Where PersonID = @ID\";\n"
+                + "SqlCommand command = new SqlCommand(query, connection);\n"
+                + "command.Parameters.AddWithValue(\"@ID\",ID);\n"
+                + "try \n"
+                + "{ \n"
+                + "connection.Open();\n"
+                + "SqlDataReader reader = command.ExecuteReader();\n"
+                + "if (reader.Read())\n"
+                + "{\n"
+                + "isFound = true;\n"
+                + "}\n"
+                + "else\n"
+                + "{\n"
+                + "isFound = false;\n"
+                + "}\n"
+                + "}\n"
+                + "catch (Exception ex)\n"
+                + "{\n"
+                + "isFound = false;\n"
+                + "}\n"
+                + "finally { connection.Close(); }\n"
+                + "return isFound;\n"
+                + "}";
+
+
+        }
         private void GenerateAddNewDataAccess()
         {
 
@@ -660,6 +701,32 @@ namespace Code_Generator
             //    command.Parameters.AddWithValue("@Balance", Balance);
             //    command.Parameters.AddWithValue("@PersonID", PersonID);
         }
+
+        private void GenerateUpdateDataAccess()
+        {
+            richTextBox2.Text += $"public static bool Update{txtTableName.Text}s(" + RemoveLastComma(ref Data.Parameter) + ")\n"
+        + "{\n"
+        + "int RowsAffected = 0;\n" +
+        "SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);\n"
+        + $"string query = @\"Update {txtTableName.Text}s set Where {txtTableName.Text}s.{txtTableName.Text}ID = @ID\";\n" 
+       + "SqlCommand command = new SqlCommand(query, connection);\n"
+       + "command.Parameters.AddWithValue(" + ");\n"
+       + "try \n"
+       + "{ \n"
+       + "connection.Open();\n"
+       + "RowsAffected = command.ExecuteNonQuery();\n"
+       + "}\n"
+       + "catch (Exception ex)\n"
+       + "{\n"
+       + "return false;\n"
+       + "}\n"
+       + "finally { connection.Close(); }\n"
+       + "return (RowsAffected > 0);\n"
+       + "}"
+       + "\n\n";
+
+        }
+
         private void GenerateIsExistDataAccess()
         {
             richTextBox2.Text += $"public static bool Is{txtTableName.Text}Exist(int ID)"
@@ -714,58 +781,13 @@ namespace Code_Generator
         }
         private void btnGenerateDataAccess_Click(object sender, EventArgs e)
         {
+            //GenerateGetAllDataAccess();
+            //GenerateFindDataAccess();
+            //GenerateAddNewDataAccess();
+            // GenerateUpdateDataAccess();
             //GenerateIsExistDataAccess();
             //GenerateDeleteDataAccess();
-            //GenerateGetAllDataAccess();
-            GenerateAddNewDataAccess();
-
-            //string[] words = Data.VariableName.Split(',');
-            //string myword = "";
-            //foreach (var word in words)
-            //{
-            //    myword += word;
-            //}
-
-
-
-            //richTextBox2.Text = $"public static bool Generate{txtTableName.Text}InfoByID(" + 
-            //     $"{RemoveLastComma(ref Data.VariableNameByRefWithDataType)}" + ")" 
-            //     + "{\n"
-            //     + "bool isFound = false;\n" +
-            //     "SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);\n"
-            //     +  $"string query = \"Select * from {txtTableName.Text}s Where PersonID = @ID\";\n"
-            //    + "SqlCommand command = new SqlCommand(query, connection);\n"
-            //    + "command.Parameters.AddWithValue(\"@ID\",ID);\n"
-            //    + "try \n" 
-            //    + "{ \n"
-            //    + "connection.Open();\n"
-            //    + "SqlDataReader reader = command.ExecuteReader();\n"
-            //    + "if (reader.Read())\n"
-            //    + "{\n"
-            //    + "isFound = true;\n"
-            //    + $"{RemoveLastComma(ref Data.VariableName)} = reader[{RemoveLastComma(ref Data.VariableName)}]\n"
-            //    + "}\n"
-            //    + "else\n"
-            //    + "{\n"
-            //    + "isFound = false;\n"
-            //    + "}\n"
-            //    + "}\n"
-            //    + "catch (Exception ex)\n"
-            //    + "{\n"
-            //    + "isFound = false;\n"
-            //    + "}\n"
-            //    + "finally { connection.Close(); }\n"
-            //    + "return isFound;\n"
-            //    + "}" ;
-
-
-            //            Name = (string)reader["Name"];
-
-
-
-
-
-
+     
 
         }
     }
