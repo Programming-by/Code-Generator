@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Common;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
@@ -23,6 +24,9 @@ namespace Code_Generator
 
         private string NullValue;
 
+        public string DataReader;
+
+        public string Reader_Data = "";
 
 
         struct FunctionData
@@ -38,11 +42,12 @@ namespace Code_Generator
             public string VariableNameByRef;
             public string VariableNameByRefWithDataType;
             public string VariableNameWithAt;
+            public string Datatype;
         }
 
         FunctionData Data;
 
-        // generate data access for find ,  ,command parameters in add,command parameters in update and set
+        // command parameters in add,command parameters in update and set
 
         public Form1()
         {
@@ -162,10 +167,6 @@ namespace Code_Generator
             GenerateDefaultConstructor(item);
 
             GenerateParameterizedConstructor(item);
-          
-               
-
-
 
         }
 
@@ -194,6 +195,7 @@ namespace Code_Generator
                     Data.VariableNameWithComma += item.Text + ",";
                     Data.VariableNameByRefWithDataType += "ref string " + item.Text + ",";
                     Data.VariableNameWithAt += "@" + item.Text + ",";
+                    Data.Datatype = "string";
 
                     break;
 
@@ -208,6 +210,7 @@ namespace Code_Generator
                     Data.VariableNameWithComma += item.Text + ",";
                     Data.VariableNameByRefWithDataType += "ref int " + item.Text + ",";
                     Data.VariableNameWithAt += "@" + item.Text + ",";
+                    Data.Datatype = "int";
 
 
 
@@ -224,6 +227,7 @@ namespace Code_Generator
                     Data.VariableNameWithComma += item.Text + ",";
                     Data.VariableNameByRefWithDataType += "ref decimal " + item.Text + ",";
                     Data.VariableNameWithAt += "@" + item.Text + ",";
+                    Data.Datatype = "decimal";
 
                     break;
                 case "bit":
@@ -237,6 +241,7 @@ namespace Code_Generator
                     Data.VariableNameWithComma += item.Text + ",";
                     Data.VariableNameByRefWithDataType += "ref bool " + item.Text + ",";
                     Data.VariableNameWithAt += "@" + item.Text + ",";
+                    Data.Datatype = "decimal";
 
 
 
@@ -254,6 +259,7 @@ namespace Code_Generator
                     Data.VariableNameWithComma += item.Text + ",";
                     Data.VariableNameByRefWithDataType += "ref decimal " + item.Text + ",";
                     Data.VariableNameWithAt += "@" + item.Text + ",";
+                    Data.Datatype = "decimal";
 
 
 
@@ -272,6 +278,7 @@ namespace Code_Generator
                     Data.VariableNameWithComma += item.Text + ",";
                     Data.VariableNameByRefWithDataType += "ref decimal " + item.Text + ",";
                     Data.VariableNameWithAt += "@" + item.Text + ",";
+                    Data.Datatype = "decimal";
 
 
 
@@ -287,6 +294,7 @@ namespace Code_Generator
                     Data.VariableNameWithComma += item.Text + ",";
                     Data.VariableNameByRefWithDataType += "ref Int16 " + item.Text + ",";
                     Data.VariableNameWithAt += "@" + item.Text + ",";
+                    Data.Datatype = "Int16";
 
 
 
@@ -302,6 +310,7 @@ namespace Code_Generator
                     Data.VariableNameWithComma += item.Text + ",";
                     Data.VariableNameByRefWithDataType += "ref float " + item.Text + ",";
                     Data.VariableNameWithAt += "@" + item.Text + ",";
+                    Data.Datatype = "float";
 
 
                     break;
@@ -319,6 +328,7 @@ namespace Code_Generator
                     Data.VariableNameByRefWithDataType += "ref DateTime " + item.Text + ",";
                     Data.VariableNameWithAt += "@" + item.Text + ",";
 
+                    Data.Datatype = "DateTime";
 
 
                     break;
@@ -534,7 +544,6 @@ namespace Code_Generator
         }
 
 
-
     private void btnFindFunction_Click(object sender, EventArgs e)
         {
 
@@ -634,8 +643,39 @@ namespace Code_Generator
 
         }
         
+        private void SplitString()
+        {
+            string[] stringSeparators = new string[] { "," };
+            string[] result;
+
+
+            result = Data.VariableNameWithComma.Split(stringSeparators, StringSplitOptions.None);
+
+            foreach (string SingleReader in result)
+            {
+                if (SingleReader == "ID")
+                {
+                    continue;
+                }
+
+                if (SingleReader == "")
+                {
+                    break;
+                }
+
+                Reader_Data += SingleReader + $" = ({Data.Datatype}) reader[\"{SingleReader}\"]; \n";
+            }
+
+
+
+
+        }
         private void GenerateFindDataAccess()
         {
+
+            SplitString();
+            
+           
 
             richTextBox2.Text = $"public static bool Generate{txtTableName.Text}InfoByID(" +
                  $"{RemoveLastComma(ref Data.VariableNameByRefWithDataType)}" + ")"
@@ -652,7 +692,8 @@ namespace Code_Generator
                 + "if (reader.Read())\n"
                 + "{\n"
                 + "isFound = true;\n"
-                + "}\n"
+                + Reader_Data
+                + "\n}\n"
                 + "else\n"
                 + "{\n"
                 + "isFound = false;\n"
@@ -668,19 +709,27 @@ namespace Code_Generator
 
 
         }
+       
+   
+
         private void GenerateAddNewDataAccess()
         {
 
-            richTextBox2.Text += $"public static int AddNew{txtTableName.Text}(" + RemoveLastComma(ref Data.Parameter)  +  ")\n"
+            
+            // ID,Name,Amount
+            // @ID,@Name,@Amount
+
+        
+         richTextBox2.Text += $"public static int AddNew{txtTableName.Text}(" + RemoveLastComma(ref Data.Parameter)  +  ")\n"
         + "{\n"
         + "int ClientID = -1;\n" +
         "SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);\n"
         + $"string query = @\"INSERT INTO {txtTableName.Text}s ({RemoveLastComma(ref Data.VariableNameWithComma)}) " +
         $"VALUES ({RemoveLastComma(ref Data.VariableNameWithAt)}) " +
         $"SELECT SCOPE_IDENTITY()\";\n"
-       + "SqlCommand command = new SqlCommand(query, connection);\n"
-       +  "command.Parameters.AddWithValue(" + ");\n"
-       +"try \n"
+       + "SqlCommand command = new SqlCommand(query, connection);\n"      
+       + "command.Parameters.AddWithValue(" + ");\n"
+       + "try \n"
        + "{ \n"
        + "connection.Open();\n"
        + "object result = command.ExecuteScalar();\n"
@@ -782,8 +831,8 @@ namespace Code_Generator
         private void btnGenerateDataAccess_Click(object sender, EventArgs e)
         {
             //GenerateGetAllDataAccess();
-            //GenerateFindDataAccess();
-            //GenerateAddNewDataAccess();
+            GenerateFindDataAccess();
+           // GenerateAddNewDataAccess();
             // GenerateUpdateDataAccess();
             //GenerateIsExistDataAccess();
             //GenerateDeleteDataAccess();
