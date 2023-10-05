@@ -27,6 +27,7 @@ namespace Code_Generator
         public string DataReader;
 
         public string Reader_Data = "";
+        public string CommandsParameter_Data = "";
 
 
         struct FunctionData
@@ -47,7 +48,7 @@ namespace Code_Generator
 
         FunctionData Data;
 
-        // command parameters in add,command parameters in update and set
+        //command parameters in update and set
 
         public Form1()
         {
@@ -643,7 +644,7 @@ namespace Code_Generator
 
         }
         
-        private void SplitString()
+        private void SplitStringInReader()
         {
             string[] stringSeparators = new string[] { "," };
             string[] result;
@@ -670,12 +671,32 @@ namespace Code_Generator
 
 
         }
+
+        private void SplitStringInCommandParameters()
+        {
+            string[] stringSeparators = new string[] { "," };
+            string[] result;
+
+
+            result = Data.VariableNameWithComma.Split(stringSeparators, StringSplitOptions.None);
+
+            foreach (string SingleReader in result)
+            {
+                if (SingleReader == "")
+                {
+                    break;
+                }
+
+                CommandsParameter_Data += "command.Parameters.AddWithValue(" + $"\"@{SingleReader}\",{SingleReader}" + ");\n";
+            }
+        }
+
+
         private void GenerateFindDataAccess()
         {
 
-            SplitString();
+            SplitStringInReader();
             
-           
 
             richTextBox2.Text = $"public static bool Generate{txtTableName.Text}InfoByID(" +
                  $"{RemoveLastComma(ref Data.VariableNameByRefWithDataType)}" + ")"
@@ -709,18 +730,13 @@ namespace Code_Generator
 
 
         }
-       
    
-
         private void GenerateAddNewDataAccess()
         {
 
-            
-            // ID,Name,Amount
-            // @ID,@Name,@Amount
+            SplitStringInCommandParameters();
 
-        
-         richTextBox2.Text += $"public static int AddNew{txtTableName.Text}(" + RemoveLastComma(ref Data.Parameter)  +  ")\n"
+            richTextBox2.Text += $"public static int AddNew{txtTableName.Text}(" + RemoveLastComma(ref Data.Parameter)  +  ")\n"
         + "{\n"
         + "int ClientID = -1;\n" +
         "SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);\n"
@@ -728,7 +744,7 @@ namespace Code_Generator
         $"VALUES ({RemoveLastComma(ref Data.VariableNameWithAt)}) " +
         $"SELECT SCOPE_IDENTITY()\";\n"
        + "SqlCommand command = new SqlCommand(query, connection);\n"      
-       + "command.Parameters.AddWithValue(" + ");\n"
+       + CommandsParameter_Data
        + "try \n"
        + "{ \n"
        + "connection.Open();\n"
@@ -831,8 +847,8 @@ namespace Code_Generator
         private void btnGenerateDataAccess_Click(object sender, EventArgs e)
         {
             //GenerateGetAllDataAccess();
-            GenerateFindDataAccess();
-           // GenerateAddNewDataAccess();
+            //GenerateFindDataAccess();
+            GenerateAddNewDataAccess();
             // GenerateUpdateDataAccess();
             //GenerateIsExistDataAccess();
             //GenerateDeleteDataAccess();
