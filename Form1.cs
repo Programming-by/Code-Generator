@@ -733,7 +733,7 @@ namespace Code_Generator
                  + "{\n"
                  + "bool isFound = false;\n" +
                  "SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);\n"
-                 + $"string query = \"Select * from {txtTableName.Text}s Where PersonID = @ID\";\n"
+                 + $"string query = \"Select * from {txtTableName.Text}s Where {txtTableName.Text}ID = @ID\";\n"
                 + "SqlCommand command = new SqlCommand(query, connection);\n"
                 + "command.Parameters.AddWithValue(\"@ID\",ID);\n"
                 + "try \n"
@@ -763,6 +763,10 @@ namespace Code_Generator
    
         private void GenerateAddNewDataAccess()
         {
+
+            Data.Parameter = Data.Parameter.Replace("int ID," , "");
+            Data.VariableNameWithComma = Data.VariableNameWithComma.Replace("ID,", "");
+            Data.VariableNameWithAt = Data.VariableNameWithAt.Replace("@ID", "");
 
             SplitStringInCommandParameters();
 
@@ -834,7 +838,7 @@ namespace Code_Generator
                  + "{\n"
                  + "bool isFound = false;\n" +
                  "SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);\n"
-                 + $"string query = \"Select Found = 1 from {txtTableName.Text}s Where PersonID = @ID\";\n"
+                 + $"string query = \"Select Found = 1 from {txtTableName.Text}s Where {txtTableName.Text}ID = @ID\";\n"
                 + "SqlCommand command = new SqlCommand(query, connection);\n"
                 + "command.Parameters.AddWithValue(\"@ID\",ID);\n"
                 + "try \n"
@@ -861,7 +865,7 @@ namespace Code_Generator
                  + "{\n"
                  + "int RowsAffected = 0;\n" +
                  "SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);\n"
-                 + $"string query = \"Delete {txtTableName.Text}s Where PersonID = @ID\";\n"
+                 + $"string query = \"Delete {txtTableName.Text}s Where {txtTableName.Text}ID = @ID\";\n"
                 + "SqlCommand command = new SqlCommand(query, connection);\n"
                 + "command.Parameters.AddWithValue(\"@ID\",ID);\n"
                 + "try \n"
@@ -883,14 +887,16 @@ namespace Code_Generator
         private void btnGenerateDataAccess_Click(object sender, EventArgs e)
         {
             //GenerateGetAllDataAccess();
-            GenerateFindDataAccess();
+            //GenerateFindDataAccess();
             //GenerateAddNewDataAccess();
-            //GenerateUpdateDataAccess();
-            //GenerateIsExistDataAccess();
-            //GenerateDeleteDataAccess();
+            GenerateUpdateDataAccess();
+           //  GenerateIsExistDataAccess();
+           // GenerateDeleteDataAccess();
      
 
         }
     }
 
 }
+
+
