@@ -28,6 +28,7 @@ namespace Code_Generator
 
         public string Reader_Data = "";
         public string CommandsParameter_Data = "";
+        public string SetDataInUpdate = "";
 
 
         struct FunctionData
@@ -48,7 +49,6 @@ namespace Code_Generator
 
         FunctionData Data;
 
-        //command parameters in update and set
 
         public Form1()
         {
@@ -691,6 +691,32 @@ namespace Code_Generator
             }
         }
 
+        private void SplitStringInUpdate()
+        {
+            string[] stringSeparators = new string[] { "," };
+            string[] result;
+
+
+            result = Data.VariableNameWithComma.Split(stringSeparators, StringSplitOptions.None);
+
+            foreach (string SingleReader in result)
+            {
+
+                if (SingleReader == "ID")
+                {
+                    continue;
+                }
+
+                if (SingleReader == "")
+                {
+                    break;
+                }
+
+                SetDataInUpdate += $"{SingleReader} =@{SingleReader}\n";
+            }
+
+
+        }
 
         private void GenerateFindDataAccess()
         {
@@ -769,13 +795,19 @@ namespace Code_Generator
 
         private void GenerateUpdateDataAccess()
         {
+
+            SplitStringInCommandParameters();
+
+            SplitStringInUpdate();
+
             richTextBox2.Text += $"public static bool Update{txtTableName.Text}s(" + RemoveLastComma(ref Data.Parameter) + ")\n"
         + "{\n"
         + "int RowsAffected = 0;\n" +
         "SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);\n"
-        + $"string query = @\"Update {txtTableName.Text}s set Where {txtTableName.Text}s.{txtTableName.Text}ID = @ID\";\n" 
+        + $"string query = @\"Update {txtTableName.Text}s set "  + $"{SetDataInUpdate}"
+        + $"Where {txtTableName.Text}s.{txtTableName.Text}ID = @ID\";\n"
        + "SqlCommand command = new SqlCommand(query, connection);\n"
-       + "command.Parameters.AddWithValue(" + ");\n"
+       + CommandsParameter_Data
        + "try \n"
        + "{ \n"
        + "connection.Open();\n"
@@ -848,8 +880,8 @@ namespace Code_Generator
         {
             //GenerateGetAllDataAccess();
             //GenerateFindDataAccess();
-            GenerateAddNewDataAccess();
-            // GenerateUpdateDataAccess();
+           // GenerateAddNewDataAccess();
+            //GenerateUpdateDataAccess();
             //GenerateIsExistDataAccess();
             //GenerateDeleteDataAccess();
      
