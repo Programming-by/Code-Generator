@@ -721,6 +721,10 @@ namespace Code_Generator
         private void GenerateFindDataAccess()
         {
 
+
+            Data.VariableNameByRefWithDataType = Data.VariableNameByRefWithDataType.Replace("ref int ID,", "int ID,");
+
+
             SplitStringInReader();
             
 
@@ -879,8 +883,8 @@ namespace Code_Generator
         private void btnGenerateDataAccess_Click(object sender, EventArgs e)
         {
             //GenerateGetAllDataAccess();
-            //GenerateFindDataAccess();
-           // GenerateAddNewDataAccess();
+            GenerateFindDataAccess();
+            //GenerateAddNewDataAccess();
             //GenerateUpdateDataAccess();
             //GenerateIsExistDataAccess();
             //GenerateDeleteDataAccess();
