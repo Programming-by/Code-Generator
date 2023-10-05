@@ -65,6 +65,7 @@
             this.btnDeleteFunction = new System.Windows.Forms.Button();
             this.btnGetAllFunction = new System.Windows.Forms.Button();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.richTextBox2 = new System.Windows.Forms.RichTextBox();
             this.btnDefaultConstructor = new System.Windows.Forms.Button();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
@@ -82,8 +83,6 @@
             this.btnSaveFunction = new System.Windows.Forms.Button();
             this.btnGenerateProperties = new System.Windows.Forms.Button();
             this.btnParameterizedConstructor = new System.Windows.Forms.Button();
-            this.btnGenerateDataAccess = new System.Windows.Forms.Button();
-            this.richTextBox2 = new System.Windows.Forms.RichTextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -462,6 +461,14 @@
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "DataAccess";
             // 
+            // richTextBox2
+            // 
+            this.richTextBox2.Location = new System.Drawing.Point(0, 21);
+            this.richTextBox2.Name = "richTextBox2";
+            this.richTextBox2.Size = new System.Drawing.Size(537, 475);
+            this.richTextBox2.TabIndex = 10;
+            this.richTextBox2.Text = "";
+            // 
             // btnDefaultConstructor
             // 
             this.btnDefaultConstructor.Location = new System.Drawing.Point(489, 524);
@@ -628,30 +635,11 @@
             this.btnParameterizedConstructor.UseVisualStyleBackColor = true;
             this.btnParameterizedConstructor.Click += new System.EventHandler(this.btnParameterizedConstructor_Click);
             // 
-            // btnGenerateDataAccess
-            // 
-            this.btnGenerateDataAccess.Location = new System.Drawing.Point(965, 542);
-            this.btnGenerateDataAccess.Name = "btnGenerateDataAccess";
-            this.btnGenerateDataAccess.Size = new System.Drawing.Size(142, 62);
-            this.btnGenerateDataAccess.TabIndex = 22;
-            this.btnGenerateDataAccess.Text = "Generate Data Access";
-            this.btnGenerateDataAccess.UseVisualStyleBackColor = true;
-            this.btnGenerateDataAccess.Click += new System.EventHandler(this.btnGenerateDataAccess_Click);
-            // 
-            // richTextBox2
-            // 
-            this.richTextBox2.Location = new System.Drawing.Point(0, 21);
-            this.richTextBox2.Name = "richTextBox2";
-            this.richTextBox2.Size = new System.Drawing.Size(537, 475);
-            this.richTextBox2.TabIndex = 10;
-            this.richTextBox2.Text = "";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1490, 1055);
-            this.Controls.Add(this.btnGenerateDataAccess);
             this.Controls.Add(this.btnParameterizedConstructor);
             this.Controls.Add(this.btnDefaultConstructor);
             this.Controls.Add(this.btnGenerateProperties);
@@ -749,7 +737,6 @@
         private System.Windows.Forms.Button btnGenerateProperties;
         private System.Windows.Forms.Button btnDefaultConstructor;
         private System.Windows.Forms.Button btnParameterizedConstructor;
-        private System.Windows.Forms.Button btnGenerateDataAccess;
         private System.Windows.Forms.RichTextBox richTextBox2;
     }
 }

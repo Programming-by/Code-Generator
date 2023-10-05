@@ -453,26 +453,32 @@ namespace Code_Generator
         }
         private void btnAddFunction_Click(object sender, EventArgs e)
         {
+
+            GenerateAddNewDataAccess();
+
             RemoveLastComma(ref Data.Parameter);
             RemoveLastComma(ref Data.Argument);
 
-            richTextBox1.Text = $"public bool _AddNew{txtTableName.Text}(" + Data.Parameter + ")"
+            richTextBox1.Text = $"private bool _AddNew{txtTableName.Text}(" + Data.Parameter + ")"
 
                 + $"\nthis.{txtTableName.Text}ID = cls{txtTableName.Text}DataAccess.AddNew{txtTableName.Text}("
 
                 + Data.Argument + ")"
 
-             + $"\nreturn (this.{txtTableName.Text} != -1)"
+             + $"\nreturn (this.{txtTableName.Text}ID != -1)"
 
              + "\n }";
 
         }
         private void btnUpdateFunction_Click(object sender, EventArgs e)
         {
+
+            GenerateUpdateDataAccess();
+
             RemoveLastComma (ref Data.Parameter);
             RemoveLastComma(ref Data.Argument);
 
-            richTextBox1.Text = $"private bool _Update{txtTableName.Text}(" + Data.Parameter + ")"
+            richTextBox1.Text = $"private bool _Update{txtTableName.Text}()"
 
           + "{" + $"\nreturn cls{txtTableName.Text}DataAccess.Update{txtTableName.Text}({Data.Argument})"
 
@@ -482,6 +488,8 @@ namespace Code_Generator
         }
         private void btnIsExist_Click(object sender, EventArgs e)
         {
+            GenerateIsExistDataAccess();
+
             richTextBox1.Text = $"public static bool Is{txtTableName.Text}Exist(int ID)"
 
               + "{" + $"\nreturn cls{txtTableName.Text}DataAccess.Is{txtTableName.Text}Exist(ID);"
@@ -491,6 +499,8 @@ namespace Code_Generator
 
         private void btnDeleteFunction_Click(object sender, EventArgs e)
         {
+            GenerateDeleteDataAccess();
+
             richTextBox1.Text = $"public static bool Delete{txtTableName.Text}(int ID)"
 
        + "{" + $"\nreturn cls{txtTableName.Text}DataAccess.Delete{txtTableName.Text}(ID);"
@@ -530,6 +540,10 @@ namespace Code_Generator
         private void btnGetAllFunction_Click(object sender, EventArgs e)
         {
 
+            GenerateGetAllDataAccess();
+
+
+
             richTextBox1.Text = $"public static DataTable GetAll{txtTableName.Text}s()"
 
                 + "{" + $"\nreturn cls{txtTableName.Text}DataAccess.GetAll{txtTableName.Text}s();"
@@ -547,6 +561,8 @@ namespace Code_Generator
 
     private void btnFindFunction_Click(object sender, EventArgs e)
         {
+
+            GenerateFindDataAccess();
 
             ReplaceText(ref Data.VariableNameByRef);
 
@@ -765,7 +781,6 @@ namespace Code_Generator
         {
 
             Data.Parameter = Data.Parameter.Replace("int ID," , "");
-            Data.VariableNameWithComma = Data.VariableNameWithComma.Replace("ID,", "");
             Data.VariableNameWithAt = Data.VariableNameWithAt.Replace("@ID", "");
 
             SplitStringInCommandParameters();
@@ -882,17 +897,6 @@ namespace Code_Generator
                 + "}"
                 + "\n\n";
 
-
-        }
-        private void btnGenerateDataAccess_Click(object sender, EventArgs e)
-        {
-            //GenerateGetAllDataAccess();
-            //GenerateFindDataAccess();
-            //GenerateAddNewDataAccess();
-            GenerateUpdateDataAccess();
-           //  GenerateIsExistDataAccess();
-           // GenerateDeleteDataAccess();
-     
 
         }
     }
