@@ -48,9 +48,9 @@
             this.btnCreateTable = new System.Windows.Forms.Button();
             this.txtTableName = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.cbDataTypeSize = new System.Windows.Forms.ComboBox();
             this.chkIsNull = new System.Windows.Forms.CheckBox();
             this.label11 = new System.Windows.Forms.Label();
-            this.txtDatatypeSize = new System.Windows.Forms.TextBox();
             this.cbDataTypes = new System.Windows.Forms.ComboBox();
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
@@ -263,9 +263,9 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.cbDataTypeSize);
             this.groupBox4.Controls.Add(this.chkIsNull);
             this.groupBox4.Controls.Add(this.label11);
-            this.groupBox4.Controls.Add(this.txtDatatypeSize);
             this.groupBox4.Controls.Add(this.cbDataTypes);
             this.groupBox4.Controls.Add(this.label10);
             this.groupBox4.Controls.Add(this.label9);
@@ -277,6 +277,25 @@
             this.groupBox4.TabIndex = 11;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Column Name";
+            // 
+            // cbDataTypeSize
+            // 
+            this.cbDataTypeSize.FormattingEnabled = true;
+            this.cbDataTypeSize.Items.AddRange(new object[] {
+            "10",
+            "20",
+            "30",
+            "40",
+            "50",
+            "60",
+            "70",
+            "80",
+            "90",
+            "100"});
+            this.cbDataTypeSize.Location = new System.Drawing.Point(287, 89);
+            this.cbDataTypeSize.Name = "cbDataTypeSize";
+            this.cbDataTypeSize.Size = new System.Drawing.Size(58, 24);
+            this.cbDataTypeSize.TabIndex = 14;
             // 
             // chkIsNull
             // 
@@ -298,15 +317,6 @@
             this.label11.TabIndex = 11;
             this.label11.Text = "IsNull???";
             // 
-            // txtDatatypeSize
-            // 
-            this.txtDatatypeSize.Location = new System.Drawing.Point(311, 89);
-            this.txtDatatypeSize.Multiline = true;
-            this.txtDatatypeSize.Name = "txtDatatypeSize";
-            this.txtDatatypeSize.Size = new System.Drawing.Size(34, 24);
-            this.txtDatatypeSize.TabIndex = 10;
-            this.txtDatatypeSize.TextChanged += new System.EventHandler(this.txtDatatypeSize_TextChanged_1);
-            // 
             // cbDataTypes
             // 
             this.cbDataTypes.FormattingEnabled = true;
@@ -326,7 +336,7 @@
             "image"});
             this.cbDataTypes.Location = new System.Drawing.Point(124, 89);
             this.cbDataTypes.Name = "cbDataTypes";
-            this.cbDataTypes.Size = new System.Drawing.Size(181, 24);
+            this.cbDataTypes.Size = new System.Drawing.Size(146, 24);
             this.cbDataTypes.TabIndex = 9;
             // 
             // label10
@@ -710,7 +720,6 @@
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.CheckBox chkIsNull;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.TextBox txtDatatypeSize;
         private System.Windows.Forms.ComboBox cbDataTypes;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label9;
@@ -747,6 +756,7 @@
         private System.Windows.Forms.Button btnParameterizedConstructor;
         private System.Windows.Forms.RichTextBox richTextBox2;
         private System.Windows.Forms.ErrorProvider errorProvider1;
+        private System.Windows.Forms.ComboBox cbDataTypeSize;
     }
 }
 

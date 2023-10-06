@@ -139,6 +139,9 @@ namespace Code_Generator
 
         private void btnAddColumns_Click(object sender, EventArgs e)
         {
+
+            ChangeDataTypeSize();
+
             ListViewItem item = new ListViewItem(txtColumnName.Text);
 
             listViewColumns.Items.Add(item);
@@ -345,18 +348,7 @@ namespace Code_Generator
 
         }
 
-        private void txtDatatypeSize_TextChanged_1(object sender, EventArgs e)
-        {
-            if (txtDatatypeSize.Text.Length > 1 || txtDatatypeSize.Text.Length > 2)
-            {
-                if (cbDataTypes.SelectedIndex == 0)
-                {
-                    cbDataTypes.Text = cbDataTypes.Text.Replace("(0)", "(" + txtDatatypeSize.Text + ")");
-                }
-
-            }
-        }
-
+     
         private void btnCreateTable_Click(object sender, EventArgs e)
         {
           if (cbTables.Items.Contains(txtTableName.Text))
@@ -415,11 +407,17 @@ namespace Code_Generator
         {
             _FillColumnsInComboBox(cbDatabases.Text ,cbTables.Text);
         }
+        private void cbTable1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            _FillColumn1InComboBox(cbDatabases.Text, cbTable1.Text);
+        }
+        private void cbTable2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+              _FillColumn2InComboBox(cbDatabases.Text , cbTable2.Text);
+        }
 
         private void btnAddPrimaryKey_Click(object sender, EventArgs e)
         {
-
-
             if (clsCodeGenerator.AddPrimaryKey(cbTables.Text, cbColumns.Text))
             {
                 MessageBox.Show(cbColumns.Text + " Primary Key Added");
@@ -428,27 +426,18 @@ namespace Code_Generator
             {
                 MessageBox.Show("this table already has a Primary Key");
             }
-
         }
-
 
         private void btnAddForeignKey_Click(object sender, EventArgs e)
         {
-            if (clsCodeGenerator.AddForeignKey(cbTable1.Text ,cbTable2.Text ,cbColumn1.Text, cbColumn2.Text))
+            if (clsCodeGenerator.AddForeignKey(cbTable1.Text, cbTable2.Text, cbColumn1.Text, cbColumn2.Text))
             {
                 MessageBox.Show("Foreign Key Added");
+                return;
             }
         }
 
-        private void cbTable1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            _FillColumn1InComboBox(cbDatabases.Text, cbTable1.Text);
-        }
 
-        private void cbTable2_SelectedIndexChanged(object sender, EventArgs e)
-        {
-              _FillColumn2InComboBox(cbDatabases.Text , cbTable2.Text);
-        }
         private void btnAddFunction_Click(object sender, EventArgs e)
         {
 
@@ -898,6 +887,13 @@ namespace Code_Generator
 
         }
 
+        private void ChangeDataTypeSize()
+        {
+            if (cbDataTypes.SelectedIndex == 0)
+            {
+                cbDataTypes.Text = cbDataTypes.Text.Replace($"{cbDataTypes.Text}", $"nvarchar({cbDataTypeSize.Text})");
+            }
+        }
        
     }
 
