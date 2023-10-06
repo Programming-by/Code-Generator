@@ -76,7 +76,6 @@ namespace Code_Generator
                 cbTables.Items.Add(row["TABLE_NAME"]);
             }
         }
-
         private void _FillTable1InComboBox(string DatabaseName)
         {
             DataTable dtTable1 = clsCodeGenerator.GetAllTables(DatabaseName);
@@ -96,7 +95,6 @@ namespace Code_Generator
                 cbTable2.Items.Add(row["TABLE_NAME"]);
             }
         }
-
         private void _FillColumn1InComboBox(string DatabaseName, string Table1)
         {
             DataTable dtColumn1 = clsCodeGenerator.GetAllColumns(DatabaseName, Table1);
@@ -106,8 +104,6 @@ namespace Code_Generator
                 cbColumn1.Items.Add(row["COLUMN_NAME"]);
             }
         }
-
-
         private void _FillColumn2InComboBox(string DatabaseName, string Table2)
         {
             DataTable dtColumn2 = clsCodeGenerator.GetAllColumns(DatabaseName, Table2);
@@ -117,7 +113,6 @@ namespace Code_Generator
                 cbColumn2.Items.Add(row["COLUMN_NAME"]);
             }
         }
-
         private void _FillColumnsInComboBox(string DatabaseName, string TableName)
         {
             DataTable dtColumns = clsCodeGenerator.GetAllColumns(DatabaseName, TableName);
@@ -127,26 +122,23 @@ namespace Code_Generator
                 cbColumns.Items.Add(row["COLUMN_NAME"]);
             }
         }
-
-
         private void Form1_Load(object sender, EventArgs e)
         {
             _FillDatabasesInComboBox();
         }
-
         private void btnCreateDatabase_Click(object sender, EventArgs e)
         {
-
             if (clsCodeGenerator.CreateDatabase(txtDatabaseName.Text))
             {
                 MessageBox.Show(txtDatabaseName.Text + " Database Created Successfully");
                 _FillDatabasesInComboBox();
-            }
+                return;
+            } 
+                MessageBox.Show("there is a database with the same Name");
         }
 
         private void btnAddColumns_Click(object sender, EventArgs e)
         {
-
             ListViewItem item = new ListViewItem(txtColumnName.Text);
 
             listViewColumns.Items.Add(item);
@@ -417,7 +409,6 @@ namespace Code_Generator
             _FillTable1InComboBox(cbDatabases.Text);
 
             _FillTable2InComboBox(cbDatabases.Text);
-
         }
 
         private void cbTables_SelectedIndexChanged(object sender, EventArgs e)
@@ -427,10 +418,17 @@ namespace Code_Generator
 
         private void btnAddPrimaryKey_Click(object sender, EventArgs e)
         {
+
+
             if (clsCodeGenerator.AddPrimaryKey(cbTables.Text, cbColumns.Text))
             {
-                MessageBox.Show("Primary Key Added");
+                MessageBox.Show(cbColumns.Text + " Primary Key Added");
+
+            }  else
+            {
+                MessageBox.Show("this table already has a Primary Key");
             }
+
         }
 
 
@@ -899,6 +897,8 @@ namespace Code_Generator
 
 
         }
+
+       
     }
 
 }
