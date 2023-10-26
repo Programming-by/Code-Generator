@@ -148,16 +148,8 @@ namespace Code_Generator
             
             item.SubItems.Add(cbDataTypes.Text);
 
-            if (chkIsNull.Checked)
-            {
-                item.SubItems.Add("Null");
-            }
-            else
-            {
-                item.SubItems.Add("Not Null");
-            }
-
-
+            IsNullOrNot(item);
+        
             GenerateProperties(item,cbDataTypes.Text);
 
             GenerateDefaultConstructor(item);
@@ -182,7 +174,7 @@ namespace Code_Generator
             switch(DataType)
             {
                 case "nvarchar(50)":
-                    Data.Property += "public string " + item.Text.ToString() + " { get; set; };\n\n";
+                    Data.Property += $"public string " + item.Text.ToString() + " { get; set; }\n\n";
                     Data.AssignedValue = "\"\" ";
                     Data.Parameter += $"string {item.Text},";
                     Data.Argument += $"this.{item.Text},";
@@ -196,7 +188,7 @@ namespace Code_Generator
                     break;
 
                 case "int":
-                    Data.Property += "public int " + item.Text.ToString() + "  { get; set; };\n\n";
+                    Data.Property += "public int " + item.Text.ToString() + "  { get; set; }\n\n";
                     Data.AssignedValue = 0;
 
                     Data.Parameter += $"int {item.Text},";
@@ -213,7 +205,7 @@ namespace Code_Generator
                     break;
 
                 case "decimal":
-                    Data.Property += "public decimal " + item.Text.ToString() + " { get; set; };\n\n";
+                    Data.Property += "public decimal " + item.Text.ToString() + " { get; set; }\n\n";
                     Data.AssignedValue = 0;
                     Data.Parameter += $"decimal {item.Text},";
                     Data.Argument += $"this.{item.Text},";
@@ -227,7 +219,7 @@ namespace Code_Generator
 
                     break;
                 case "bit":
-                    Data.Property += "public bool " + item.Text.ToString() + " { get; set; };\n\n";
+                    Data.Property += "public bool " + item.Text.ToString() + " { get; set; }\n\n";
                     Data.AssignedValue = "false";
                     Data.Parameter += $"bool {item.Text},";
                     Data.Argument += $"this.{item.Text},";
@@ -245,7 +237,7 @@ namespace Code_Generator
                     break;
                     
                 case "money":
-                    Data.Property += "public decimal " + item.Text.ToString() + " { get; set; };\n\n";
+                    Data.Property += "public decimal " + item.Text.ToString() + " { get; set; }\n\n";
                     Data.AssignedValue = 0;
                     Data.Parameter += $"decimal {item.Text},";
                     Data.Argument += $"this.{item.Text},";
@@ -264,7 +256,7 @@ namespace Code_Generator
 
                 case "smallmoney":
                     
-                    Data.Property += "public decimal " + item.Text.ToString() + " { get; set; };\n\n";
+                    Data.Property += "public decimal " + item.Text.ToString() + " { get; set; }\n\n";
                     Data.AssignedValue = 0;
 
                     Data.Parameter += $"decimal {item.Text},";
@@ -281,7 +273,7 @@ namespace Code_Generator
                     break;
 
                 case "smallint":
-                    Data.Property += "public Int16 " + item.Text.ToString() + " { get; set; };\n\n";
+                    Data.Property += "public Int16 " + item.Text.ToString() + " { get; set; }\n\n";
                     Data.AssignedValue = 0;
                     Data.Parameter += $"Int16 {item.Text},";
                     Data.Argument += $"this.{item.Text},";
@@ -296,7 +288,7 @@ namespace Code_Generator
 
                     break;
                 case "float":
-                    Data.Property += "public float " + item.Text.ToString() + " { get; set; };\n\n";
+                    Data.Property += "public float " + item.Text.ToString() + " { get; set; }\n\n";
                     Data.AssignedValue = 0;
 
                     Data.Parameter += $"float {item.Text},";
@@ -314,7 +306,7 @@ namespace Code_Generator
 
                     break;
                 case "datetime":
-                    Data.Property += "public DateTime " + item.Text.ToString() + " { get; set; };\n\n";
+                    Data.Property += "public DateTime " + item.Text.ToString() + " { get; set; }\n\n";
                     Data.AssignedValue = DateTime.Now;
                     Data.Parameter += $"DateTime {item.Text},";
                     Data.Argument += $"this.{item.Text},";
@@ -329,7 +321,7 @@ namespace Code_Generator
 
                     break;
                 case "binary":
-                    Data.Property += "public Byte[] " + item.Text.ToString() + " { get; set; };\n\n";
+                    Data.Property += "public Byte[] " + item.Text.ToString() + " { get; set; }\n\n";
 
 
 
@@ -361,10 +353,7 @@ namespace Code_Generator
                 {
                    MessageBox.Show("Table Created Successfully", "Created",MessageBoxButtons.OK);
 
-                   }
-
-
-
+                }
                 foreach (ListViewItem itemRow in this.listViewColumns.Items)
                 {
                     if (clsCodeGenerator.AlterTable(txtTableName.Text, itemRow.SubItems[0].Text, itemRow.SubItems[1].Text, itemRow.SubItems[2].Text))
@@ -377,7 +366,7 @@ namespace Code_Generator
             _FillTablesInComboBox(cbDatabases.Text);
         }
 
-        private void IsNullOrNot()
+        private void IsNullOrNot(ListViewItem item)
         {
             if (chkIsNull.Checked)
             {
@@ -387,13 +376,8 @@ namespace Code_Generator
             {
                 NullValue = "Not NULL";
             }
+                item.SubItems.Add(NullValue);
         }
-
-        private void chkIsNull_CheckedChanged(object sender, EventArgs e)
-        {
-            IsNullOrNot();
-        }
-
         private void cbDatabases_SelectedIndexChanged(object sender, EventArgs e)
         {
             _FillTablesInComboBox(cbDatabases.Text);
@@ -544,7 +528,6 @@ namespace Code_Generator
             Text = Text.Replace("ref ID,", "ID,");
 
         }
-
 
     private void btnFindFunction_Click(object sender, EventArgs e)
         {
@@ -894,7 +877,7 @@ namespace Code_Generator
                 cbDataTypes.Text = cbDataTypes.Text.Replace($"{cbDataTypes.Text}", $"nvarchar({cbDataTypeSize.Text})");
             }
         }
-       
+
     }
 
 }

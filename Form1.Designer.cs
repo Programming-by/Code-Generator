@@ -245,9 +245,9 @@
             // 
             // btnCreateTable
             // 
-            this.btnCreateTable.Location = new System.Drawing.Point(206, 97);
+            this.btnCreateTable.Location = new System.Drawing.Point(188, 97);
             this.btnCreateTable.Name = "btnCreateTable";
-            this.btnCreateTable.Size = new System.Drawing.Size(148, 62);
+            this.btnCreateTable.Size = new System.Drawing.Size(166, 62);
             this.btnCreateTable.TabIndex = 6;
             this.btnCreateTable.Text = "Create Table";
             this.btnCreateTable.UseVisualStyleBackColor = true;
@@ -306,7 +306,6 @@
             this.chkIsNull.TabIndex = 13;
             this.chkIsNull.Text = "Is Null";
             this.chkIsNull.UseVisualStyleBackColor = true;
-            this.chkIsNull.CheckedChanged += new System.EventHandler(this.chkIsNull_CheckedChanged);
             // 
             // label11
             // 
